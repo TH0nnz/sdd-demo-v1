@@ -218,7 +218,7 @@ All features MUST pass these gates before deployment:
 - Team members MUST be trained on constitutional requirements
 
 **Documentation Language**:
--  All specifications, plans, and user-facing documentation MUST be written in Traditional Chinese (zh-TW
+-  All specifications, plans, and user-facing documentation MUST be written in Traditional Chinese (zh-TW)
 -  Code comments and technical documentation MAY use English for technical clarity
 -  Commit messages and internal development notes MAY use English
 
