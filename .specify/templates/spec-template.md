@@ -100,6 +100,35 @@
 - **[Entity 1]**: [What it represents, key attributes without implementation]
 - **[Entity 2]**: [What it represents, relationships to other entities]
 
+### Non-Functional Requirements *(reference constitution)*
+
+<!--
+  ACTION REQUIRED: Define non-functional requirements based on constitution principles.
+  See .specify/memory/constitution.md for detailed requirements.
+-->
+
+**Performance** (Constitution IV):
+- **NFR-001**: API response time < 200ms (p95) for [operation type]
+- **NFR-002**: Page load time < 2 seconds (p95)
+- **NFR-003**: System handles [expected peak load + 50%] concurrent users
+
+**User Experience** (Constitution III):
+- **NFR-004**: All interfaces meet WCAG 2.1 AA accessibility standards
+- **NFR-005**: Error messages are clear, actionable, and user-friendly
+- **NFR-006**: UI provides immediate feedback for all user actions
+- **NFR-007**: Consistent terminology and interaction patterns across all screens
+
+**Code Quality** (Constitution I):
+- **NFR-008**: Code coverage minimum 80%, critical paths 100%
+- **NFR-009**: All code passes automated linting and formatting checks
+- **NFR-010**: Cyclomatic complexity within acceptable thresholds
+
+**Testing** (Constitution II - NON-NEGOTIABLE):
+- **NFR-011**: Unit tests for all business logic
+- **NFR-012**: Integration tests for all API endpoints
+- **NFR-013**: Contract tests for all public interfaces
+- **NFR-014**: Tests written before implementation (test-first approach)
+
 ## Success Criteria *(mandatory)*
 
 <!--

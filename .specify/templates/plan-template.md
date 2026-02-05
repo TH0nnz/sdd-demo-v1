@@ -31,7 +31,29 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+### Code Quality Standards ✓
+- [ ] Code follows established language-specific style guides
+- [ ] Linting and formatting tools configured
+- [ ] Code review process established
+- [ ] Complexity metrics defined
+
+### Testing Standards (NON-NEGOTIABLE) ✓
+- [ ] Test strategy defined (unit, integration, contract)
+- [ ] Minimum 80% code coverage target set
+- [ ] Test-first approach planned for acceptance criteria
+- [ ] CI/CD pipeline includes automated test execution
+
+### User Experience Consistency ✓
+- [ ] UI patterns and terminology documented
+- [ ] Error handling strategy defined
+- [ ] Accessibility requirements (WCAG 2.1 AA) planned
+- [ ] User feedback mechanisms identified
+
+### Performance Requirements ✓
+- [ ] Performance targets defined (response times, resource limits)
+- [ ] Performance testing approach outlined
+- [ ] Monitoring and instrumentation planned
+- [ ] Performance budgets established
 
 ## Project Structure
 
