@@ -217,6 +217,11 @@ All features MUST pass these gates before deployment:
 - Templates and tooling MUST align with constitutional principles
 - Team members MUST be trained on constitutional requirements
 
+**Documentation Language**:
+-  All specifications, plans, and user-facing documentation MUST be written in Traditional Chinese (zh-TW
+-  Code comments and technical documentation MAY use English for technical clarity
+-  Commit messages and internal development notes MAY use English
+
 **Reference**: Development teams SHOULD refer to feature plan templates, specification templates, and task templates for practical application of these principles.
 
 **Version**: 1.0.0 | **Ratified**: 2026-02-05 | **Last Amended**: 2026-02-05
