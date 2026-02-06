@@ -93,13 +93,11 @@ interface Emits {
   (e: 'cancel'): void;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   loading: false,
 });
 
 const emit = defineEmits<Emits>();
-
-const props = defineProps<Props>();
 
 const formData = ref({
   name: '',

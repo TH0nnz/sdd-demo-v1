@@ -103,7 +103,7 @@ const pendingTasks = ref(0)
 const pendingRequests = ref(0)
 const recentActivities = ref<any[]>([])
 
-const canCreateProject = computed(() => authStore.user?.role === UserRole.MANAGER)
+const canCreateProject = computed(() => authStore.user?.role === UserRole.EXECUTIVE)
 const canCreateTask = computed(() => authStore.user?.role === UserRole.PM)
 
 const navigateTo = (path: string) => {

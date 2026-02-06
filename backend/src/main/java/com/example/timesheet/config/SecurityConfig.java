@@ -64,19 +64,25 @@ public class SecurityConfig {
                 .requestMatchers("/actuator/health", "/actuator/info").permitAll()
                 
                 // Role-based access control
-                .requestMatchers(HttpMethod.POST, "/api/projects/**").hasAnyRole("MANAGER", "PM")
-                .requestMatchers(HttpMethod.PUT, "/api/projects/**").hasAnyRole("MANAGER", "PM")
-                .requestMatchers(HttpMethod.DELETE, "/api/projects/**").hasRole("MANAGER")
-                .requestMatchers("/api/projects/**").hasAnyRole("MANAGER", "PM", "EXECUTIVE")
+                // EXECUTIVE = Management (highest authority, can create/manage projects)
+                // PM = Project Manager (can manage projects and tasks)
+                // MANAGER = Department Head (can view department reports)
+                // EMPLOYEE = Worker (can log timesheets)
+                // HR = Human Resources (can manage users)
                 
-                .requestMatchers("/api/tasks/**").hasAnyRole("PM", "EXECUTIVE")
+                .requestMatchers(HttpMethod.POST, "/api/projects/**").hasAnyRole("EXECUTIVE", "PM")
+                .requestMatchers(HttpMethod.PUT, "/api/projects/**").hasAnyRole("EXECUTIVE", "PM")
+                .requestMatchers(HttpMethod.DELETE, "/api/projects/**").hasRole("EXECUTIVE")
+                .requestMatchers("/api/projects/**").hasAnyRole("EXECUTIVE", "PM", "EMPLOYEE")
                 
-                .requestMatchers("/api/timesheets/**").hasAnyRole("EXECUTIVE", "PM", "DEPT_HEAD")
+                .requestMatchers("/api/tasks/**").hasAnyRole("PM", "EMPLOYEE")
                 
-                .requestMatchers("/api/reports/**").hasAnyRole("MANAGER", "DEPT_HEAD", "PM")
+                .requestMatchers("/api/timesheets/**").hasAnyRole("EMPLOYEE", "PM", "MANAGER")
+                
+                .requestMatchers("/api/reports/**").hasAnyRole("EXECUTIVE", "MANAGER", "PM")
                 
                 .requestMatchers("/api/users/**").hasRole("HR")
-                .requestMatchers("/api/departments/**").hasAnyRole("HR", "DEPT_HEAD")
+                .requestMatchers("/api/departments/**").hasAnyRole("HR", "MANAGER")
                 
                 // All other requests require authentication
                 .anyRequest().authenticated()

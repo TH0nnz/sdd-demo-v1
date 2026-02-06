@@ -27,13 +27,13 @@ import java.net.URI;
  * REST Controller for task management.
  * Handles task CRUD operations and task lifecycle management.
  * PM users have access to create/update/delete endpoints.
- * EXECUTIVE users can complete tasks.
+ * EMPLOYEE users can complete tasks.
  * 
  * Corresponds to User Story 2 - 任务管理 (Task Management)
  */
 @RestController
 @RequestMapping("/api/tasks")
-@Tag(name = "Tasks", description = "任務管理 API (PM/Executive)")
+@Tag(name = "Tasks", description = "任務管理 API (PM/Employee)")
 @Slf4j
 @SecurityRequirement(name = "BearerAuth")
 public class TaskController {
@@ -57,7 +57,7 @@ public class TaskController {
      * @return paginated task list
      */
     @GetMapping
-    @PreAuthorize("hasAnyRole('PM', 'EXECUTIVE')")
+    @PreAuthorize("hasAnyRole('PM', 'EMPLOYEE')")
     @Operation(summary = "查詢任務列表")
     public ResponseEntity<TaskPageResponse> listTasks(
             @RequestParam(required = false) Long projectId,
@@ -82,7 +82,7 @@ public class TaskController {
      * @return task details
      */
     @GetMapping("/{taskId}")
-    @PreAuthorize("hasAnyRole('PM', 'EXECUTIVE')")
+    @PreAuthorize("hasAnyRole('PM', 'EMPLOYEE')")
     @Operation(summary = "取得任務詳細資訊")
     public ResponseEntity<TaskDetailResponse> getTask(@PathVariable Long taskId) {
         log.debug("Fetching task: {}", taskId);
@@ -181,7 +181,7 @@ public class TaskController {
     
     /**
      * Mark a task as completed.
-     * Only EXECUTIVE can complete tasks.
+     * Only EMPLOYEE can complete tasks.
      * Sets completedAt timestamp.
      * 
      * @param taskId Task ID
@@ -189,7 +189,7 @@ public class TaskController {
      * @return completed task details
      */
     @PostMapping("/{taskId}/complete")
-    @PreAuthorize("hasRole('EXECUTIVE')")
+    @PreAuthorize("hasRole('EMPLOYEE')")
     @Operation(summary = "完成任務")
     public ResponseEntity<TaskDetailResponse> completeTask(
             @PathVariable Long taskId,

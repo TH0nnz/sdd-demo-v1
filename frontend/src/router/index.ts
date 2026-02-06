@@ -42,7 +42,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/timesheets/TimesheetListView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.EXECUTIVE, UserRole.PM, UserRole.DEPT_HEAD],
+      allowedRoles: [UserRole.EMPLOYEE, UserRole.PM, UserRole.MANAGER],
       title: '工時填報',
     } as RouteMeta,
   },
@@ -52,7 +52,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/timesheets/TimesheetFormView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.EXECUTIVE],
+      allowedRoles: [UserRole.EMPLOYEE],
       title: '填報工時',
     } as RouteMeta,
   },
@@ -62,7 +62,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/timesheets/TimesheetCalendarView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.EXECUTIVE],
+      allowedRoles: [UserRole.EMPLOYEE],
       title: '工時日曆',
     } as RouteMeta,
   },
@@ -72,7 +72,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/timesheets/TimesheetFormView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.EXECUTIVE],
+      allowedRoles: [UserRole.EMPLOYEE],
       title: '新增工時',
     } as RouteMeta,
   },
@@ -84,7 +84,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/projects/ProjectListView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.MANAGER, UserRole.PM, UserRole.EXECUTIVE],
+      allowedRoles: [UserRole.EXECUTIVE, UserRole.PM, UserRole.EMPLOYEE],
       title: '專案管理',
     } as RouteMeta,
   },
@@ -94,7 +94,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/projects/ProjectFormView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.MANAGER],
+      allowedRoles: [UserRole.EXECUTIVE],
       title: '新增專案',
     } as RouteMeta,
   },
@@ -104,7 +104,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/projects/ProjectFormView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.MANAGER],
+      allowedRoles: [UserRole.EXECUTIVE],
       title: '編輯專案',
     } as RouteMeta,
   },
@@ -114,7 +114,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/projects/ProjectDetailView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.MANAGER, UserRole.PM, UserRole.EXECUTIVE],
+      allowedRoles: [UserRole.EXECUTIVE, UserRole.PM, UserRole.EMPLOYEE],
       title: '專案詳情',
     } as RouteMeta,
   },
@@ -124,7 +124,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/tasks/TaskListView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.PM, UserRole.EXECUTIVE],
+      allowedRoles: [UserRole.PM, UserRole.EMPLOYEE],
       title: '任務管理',
     } as RouteMeta,
   },
@@ -154,7 +154,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/projects/ProjectDashboardView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.PM, UserRole.EXECUTIVE],
+      allowedRoles: [UserRole.PM, UserRole.EMPLOYEE],
       title: '專案儀表板',
     } as RouteMeta,
   },
@@ -166,7 +166,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/time-requests/TimeRequestListView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.MANAGER, UserRole.PM],
+      allowedRoles: [UserRole.EXECUTIVE, UserRole.PM],
       title: '時數申請',
     } as RouteMeta,
   },
@@ -178,7 +178,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/reports/ReportListView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.MANAGER, UserRole.DEPT_HEAD, UserRole.PM],
+      allowedRoles: [UserRole.EXECUTIVE, UserRole.MANAGER, UserRole.PM],
       title: '報表查詢',
     } as RouteMeta,
   },
@@ -188,7 +188,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/reports/TimesheetReportView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.MANAGER, UserRole.DEPT_HEAD, UserRole.PM],
+      allowedRoles: [UserRole.EXECUTIVE, UserRole.MANAGER, UserRole.PM],
       title: '工時報表',
     } as RouteMeta,
   },
@@ -198,7 +198,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/reports/ProjectReportView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.MANAGER, UserRole.DEPT_HEAD, UserRole.PM],
+      allowedRoles: [UserRole.EXECUTIVE, UserRole.MANAGER, UserRole.PM],
       title: '專案報表',
     } as RouteMeta,
   },
@@ -208,7 +208,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/reports/ProjectReportView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.MANAGER, UserRole.DEPT_HEAD, UserRole.PM],
+      allowedRoles: [UserRole.EXECUTIVE, UserRole.MANAGER, UserRole.PM],
       title: '人員報表',
     } as RouteMeta,
   },
@@ -250,7 +250,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/departments/DepartmentListView.vue'),
     meta: {
       requiresAuth: true,
-      allowedRoles: [UserRole.HR, UserRole.DEPT_HEAD],
+      allowedRoles: [UserRole.HR, UserRole.MANAGER],
       title: '部門管理',
     } as RouteMeta,
   },

@@ -85,15 +85,15 @@ const authStore = useAuthStore();
 const showUserMenu = ref(false);
 
 const canAccessReports = computed(() => {
-  return [UserRole.MANAGER, UserRole.DEPT_HEAD, UserRole.PM].includes(authStore.userRole);
+  return [UserRole.EXECUTIVE, UserRole.MANAGER, UserRole.PM].includes(authStore.userRole);
 });
 
 const canAccessProjects = computed(() => {
-  return [UserRole.MANAGER, UserRole.PM, UserRole.EXECUTIVE].includes(authStore.userRole);
+  return [UserRole.EXECUTIVE, UserRole.PM, UserRole.EMPLOYEE].includes(authStore.userRole);
 });
 
 const canAccessTimesheets = computed(() => {
-  return [UserRole.EXECUTIVE, UserRole.PM, UserRole.DEPT_HEAD].includes(authStore.userRole);
+  return [UserRole.EMPLOYEE, UserRole.PM, UserRole.MANAGER].includes(authStore.userRole);
 });
 
 const toggleUserMenu = () => {

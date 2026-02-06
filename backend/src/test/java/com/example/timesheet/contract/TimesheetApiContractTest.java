@@ -5,6 +5,7 @@ import com.example.timesheet.domain.entity.Project;
 import com.example.timesheet.domain.entity.Task;
 import com.example.timesheet.domain.entity.User;
 import com.example.timesheet.domain.enums.ProjectStatus;
+import com.example.timesheet.domain.enums.TaskStatus;
 import com.example.timesheet.domain.enums.UserRole;
 import com.example.timesheet.domain.repository.*;
 import com.example.timesheet.dto.request.CreateTimesheetRequest;
@@ -109,7 +110,7 @@ class TimesheetApiContractTest {
             .description("Core work")
             .estimatedHours(40.0)
             .usedHours(0.0)
-            .status("TODO")
+            .status(TaskStatus.IN_PROGRESS)
             .project(project)
             .assignee(executiveUser)
             .version(0)

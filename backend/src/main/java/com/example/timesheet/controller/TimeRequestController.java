@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * REST Controller for time request management.
  * Handles time request creation, approval, and rejection.
- * MANAGER users approve/reject time requests.
+ * EXECUTIVE users approve/reject time requests.
  * PM users create time requests for additional hours.
  * 
  * Corresponds to User Story 3 - 管理層審批時數申請
@@ -46,14 +46,14 @@ public class TimeRequestController {
     
     /**
      * Get all pending time requests for manager approval.
-     * Only MANAGER can view all pending requests.
+     * Only EXECUTIVE can view all pending requests.
      * 
      * @param page page number (0-indexed)
      * @param size page size
      * @return paginated pending request list
      */
     @GetMapping("/pending")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasRole('EXECUTIVE')")
     @Operation(summary = "查詢待審批時數申請")
     public ResponseEntity<Page<TimeRequestResponse>> getPendingTimeRequests(
             @RequestParam(defaultValue = "0") int page,
@@ -74,7 +74,7 @@ public class TimeRequestController {
      * @return time request details
      */
     @GetMapping("/{requestId}")
-    @PreAuthorize("hasAnyRole('MANAGER', 'PM')")
+    @PreAuthorize("hasAnyRole('EXECUTIVE', 'PM')")
     @Operation(summary = "取得時數申請詳細資訊")
     public ResponseEntity<TimeRequestResponse> getTimeRequest(@PathVariable Long requestId) {
         log.debug("Fetching time request: {}", requestId);
@@ -92,7 +92,7 @@ public class TimeRequestController {
      * @return paginated time request list for the project
      */
     @GetMapping("/project/{projectId}")
-    @PreAuthorize("hasAnyRole('MANAGER', 'PM')")
+    @PreAuthorize("hasAnyRole('EXECUTIVE', 'PM')")
     @Operation(summary = "查詢專案的時數申請")
     public ResponseEntity<Page<TimeRequestResponse>> getTimeRequestsByProject(
             @PathVariable Long projectId,
@@ -116,7 +116,7 @@ public class TimeRequestController {
      * @return paginated time request list for the requester
      */
     @GetMapping("/my-requests")
-    @PreAuthorize("hasAnyRole('PM', 'MANAGER')")
+    @PreAuthorize("hasAnyRole('PM', 'EXECUTIVE')")
     @Operation(summary = "查詢我的時數申請")
     public ResponseEntity<Page<TimeRequestResponse>> getMyTimeRequests(
             @RequestParam(defaultValue = "0") int page,
@@ -167,7 +167,7 @@ public class TimeRequestController {
     
     /**
      * Approve or reject a time request.
-     * Only MANAGER can approve/reject requests.
+     * Only EXECUTIVE can approve/reject requests.
      * Approved requests will auto-increment project total hours.
      * 
      * @param requestId Time request ID
@@ -176,7 +176,7 @@ public class TimeRequestController {
      * @return updated time request
      */
     @PostMapping("/{requestId}/approve")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasRole('EXECUTIVE')")
     @Operation(summary = "審批時數申請")
     public ResponseEntity<TimeRequestResponse> approveTimeRequest(
             @PathVariable Long requestId,

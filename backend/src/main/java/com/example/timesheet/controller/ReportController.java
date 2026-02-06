@@ -26,13 +26,13 @@ import java.util.List;
 /**
  * REST Controller for report management (T142).
  * Handles timesheet report queries and CSV export.
- * Only DEPT_HEAD, MANAGER, PM roles can access these endpoints.
+ * Only MANAGER, EXECUTIVE, PM roles can access these endpoints.
  * 
  * Corresponds to User Story 4 - 部門工時報表 (Department Reports)
  */
 @RestController
 @RequestMapping("/api/reports")
-@Tag(name = "Reports", description = "工時報表 API (Department Head / Manager / PM)")
+@Tag(name = "Reports", description = "工時報表 API (Manager / Executive / PM)")
 @RequiredArgsConstructor
 @Slf4j
 @SecurityRequirement(name = "BearerAuth")
@@ -60,7 +60,7 @@ public class ReportController {
      * @return paginated timesheet report
      */
     @GetMapping("/timesheets")
-    @PreAuthorize("hasAnyRole('DEPT_HEAD', 'MANAGER', 'PM')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'EXECUTIVE', 'PM')")
     @Operation(
         summary = "Get timesheet report with optional filters",
         description = "Retrieve timesheet entries for a department with date, user, and project filters"
@@ -118,7 +118,7 @@ public class ReportController {
      * @return CSV file content
      */
     @GetMapping("/timesheets/export")
-    @PreAuthorize("hasAnyRole('DEPT_HEAD', 'MANAGER', 'PM')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'EXECUTIVE', 'PM')")
     @Operation(
         summary = "Export timesheet report as CSV",
         description = "Download timesheet report as CSV file with optional filters"
@@ -170,7 +170,7 @@ public class ReportController {
      * @return list of project summaries
      */
     @GetMapping("/projects/summary")
-    @PreAuthorize("hasAnyRole('DEPT_HEAD', 'MANAGER', 'PM')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'EXECUTIVE', 'PM')")
     @Operation(
         summary = "Get project summary report",
         description = "Retrieve aggregated timesheet data grouped by project"
@@ -210,7 +210,7 @@ public class ReportController {
      * @return list of user summaries
      */
     @GetMapping("/users/summary")
-    @PreAuthorize("hasAnyRole('DEPT_HEAD', 'MANAGER', 'PM')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'EXECUTIVE', 'PM')")
     @Operation(
         summary = "Get user summary report",
         description = "Retrieve aggregated timesheet data grouped by user"

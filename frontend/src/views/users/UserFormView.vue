@@ -16,10 +16,10 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { useUserStore } from '../stores/user';
-import UserForm from '../components/users/UserForm.vue';
-import type { DepartmentResponse } from '../types/department';
-import type { UserResponse, CreateUserRequest, UpdateUserRequest } from '../types/user';
+import { useUserStore } from '../../stores/user';
+import UserForm from '../../components/users/UserForm.vue';
+import type { DepartmentResponse } from '../../types/department';
+import type { UserResponse, CreateUserRequest, UpdateUserRequest } from '../../types/user';
 
 const router = useRouter();
 const route = useRoute();

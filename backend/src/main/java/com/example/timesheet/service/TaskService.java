@@ -3,6 +3,7 @@ package com.example.timesheet.service;
 import com.example.timesheet.domain.entity.Project;
 import com.example.timesheet.domain.entity.Task;
 import com.example.timesheet.domain.entity.User;
+import com.example.timesheet.domain.enums.TaskStatus;
 import com.example.timesheet.domain.enums.UserRole;
 import com.example.timesheet.domain.repository.ProjectRepository;
 import com.example.timesheet.domain.repository.TaskRepository;
@@ -74,7 +75,7 @@ public class TaskService {
             .description(request.getDescription())
             .estimatedHours(request.getEstimatedHours())
             .usedHours(0.0)
-            .status("TODO")
+            .status(TaskStatus.IN_PROGRESS)
             .project(project)
             .assignee(assignee)
             .build();
@@ -194,7 +195,7 @@ public class TaskService {
             task.setUsedHours(request.getUsedHours());
         }
         if (request.getStatus() != null) {
-            task.setStatus(request.getStatus());
+            task.setStatus(TaskStatus.valueOf(request.getStatus()));
         }
         if (request.getAssigneeId() != null) {
             User assignee = userRepository.findById(request.getAssigneeId())
@@ -264,13 +265,39 @@ public class TaskService {
             .orElseThrow(() -> new IllegalArgumentException("Task not found with id: " + taskId));
         
         // Update task status
-        task.setStatus("COMPLETED");
+        task.setStatus(TaskStatus.COMPLETED);
         task.setCompletedAt(LocalDateTime.now());
         
         task = taskRepository.save(task);
         log.info("Task marked as completed: {}", taskId);
         
         return taskMapper.entityToDetailResponse(task);
+    }
+    
+    /**
+     * Get tasks assigned to a specific user.
+     * Supports filtering by status.
+     *
+     * @param assigneeId User ID (assignee)
+     * @param status Optional status filter
+     * @param pageable Pagination parameters
+     * @return Paginated task list
+     */
+    @Transactional(readOnly = true)
+    public TaskPageResponse getTasksByAssignee(Long assigneeId, String status, Pageable pageable) {
+        log.debug("Fetching tasks for assignee: {}, status: {}", assigneeId, status);
+        
+        Page<Task> taskPage;
+        if (status != null && !status.isEmpty()) {
+            taskPage = taskRepository.findByAssigneeIdAndStatus(assigneeId, status, pageable);
+        } else {
+            taskPage = taskRepository.findByAssigneeId(assigneeId, pageable);
+        }
+        
+        return TaskPageResponse.builder()
+            .content(taskPage.map(taskMapper::entityToDetailResponse).getContent())
+            .pageInfo(buildPageInfo(taskPage))
+            .build();
     }
     
     // ========== Helper Methods ==========

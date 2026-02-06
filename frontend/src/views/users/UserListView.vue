@@ -8,10 +8,10 @@
     <div class="filters">
       <select v-model="filters.role" @change="fetchUsers" class="filter-input">
         <option value="">所有角色</option>
-        <option value="MANAGER">管理層</option>
+        <option value="EXECUTIVE">管理層</option>
         <option value="PM">PM</option>
-        <option value="DEPT_HEAD">部門主管</option>
-        <option value="EXECUTIVE">執行人員</option>
+        <option value="MANAGER">部門主管</option>
+        <option value="EMPLOYEE">執行人員</option>
         <option value="HR">HR</option>
       </select>
 
@@ -68,8 +68,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useUserStore } from '../stores/user';
-import type { UserRole } from '../types/user';
+import { useUserStore } from '../../stores/user';
+import type { UserRole } from '../../types/user';
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -80,10 +80,10 @@ const filters = ref({
 });
 
 const roleNames: Record<UserRole, string> = {
-  MANAGER: '管理層',
+  EXECUTIVE: '管理層',
   PM: 'PM',
-  DEPT_HEAD: '部門主管',
-  EXECUTIVE: '執行人員',
+  MANAGER: '部門主管',
+  EMPLOYEE: '執行人員',
   HR: 'HR',
 };
 

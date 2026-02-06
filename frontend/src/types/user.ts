@@ -3,10 +3,10 @@
  */
 
 export enum UserRole {
-  MANAGER = 'MANAGER',
-  PM = 'PM',
-  DEPT_HEAD = 'DEPT_HEAD',
   EXECUTIVE = 'EXECUTIVE',
+  PM = 'PM',
+  MANAGER = 'MANAGER',
+  EMPLOYEE = 'EMPLOYEE',
   HR = 'HR',
 }
 

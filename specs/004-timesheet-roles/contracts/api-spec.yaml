@@ -1,0 +1,1417 @@
+openapi: 3.0.3
+info:
+  title: 報工系統 API - 角色權限管理
+  description: |
+    報工系統的 RESTful API，支援五種角色（管理層、PM、部門主管、執行人員、HR）的權限管理。
+    所有 API（除了 /auth 端點）都需要JWT 認證。
+  version: 1.0.0
+  contact:
+    name: Development Team
+    email: dev@example.com
+
+servers:
+  - url: http://localhost:8080/api
+    description: 本地開發環境
+  - url: https://api.timesheet.example.com/api
+    description: 生產環境
+
+tags:
+  - name: Authentication
+    description: 認證相關端點
+  - name: Employee
+    description: 執行人員專屬端點
+  - name: PM
+    description: 專案經理專屬端點
+  - name: Executive
+    description: 管理層專屬端點
+  - name: Manager
+    description: 部門主管專屬端點
+  - name: HR
+    description: 人力資源專屬端點
+  - name: Notifications
+    description: 通知相關端點（所有角色）
+
+security:
+  - BearerAuth: []
+
+paths:
+  # ===== Authentication =====
+  /auth/login:
+    post:
+      tags: [Authentication]
+      summary: 使用者登入
+      description: 使用 email 和密碼登入，返回 JWT token
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: pm@example.com
+                password:
+                  type: string
+                  format: password
+                  example: password123
+      responses:
+        '200':
+          description: 登入成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: JWT access token
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                  user:
+                    $ref: '#/components/schemas/UserDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/logout:
+    post:
+      tags: [Authentication]
+      summary: 使用者登出
+      description: 登出當前使用者（客戶端應刪除 JWT token）
+      responses:
+        '204':
+          description: 登出成功
+
+  /auth/me:
+    get:
+      tags: [Authentication]
+      summary: 取得當前使用者資訊
+      responses:
+        '200':
+          description: 成功返回使用者資訊
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ===== Employee Endpoints =====
+  /employee/tasks:
+    get:
+      tags: [Employee]
+      summary: 取得指派給自己的任務清單
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [IN_PROGRESS, COMPLETED, CLOSED]
+        - name: projectId
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 成功返回任務清單
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskDto'
+
+  /employee/timesheets:
+    get:
+      tags: [Employee]
+      summary: 查詢自己的工時記錄
+      parameters:
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: taskId
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 成功返回工時記錄
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimesheetEntryDto'
+
+    post:
+      tags: [Employee]
+      summary: 提交工時記錄
+      description: |
+        提交工時記錄，系統會驗證：
+        1. 日期必須在過去三個工作天內
+        2. 任務剩餘時數必須充足
+        3. 同一天對同一任務不能重複填報
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTimesheetEntryRequest'
+      responses:
+        '201':
+          description: 工時記錄建立成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimesheetEntryDto'
+        '400':
+          description: 驗證失敗（日期超出範圍、任務時數不足等）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /employee/timesheets/{id}:
+    put:
+      tags: [Employee]
+      summary: 編輯工時記錄
+      description: 僅能編輯過去三個工作天內的記錄
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTimesheetEntryRequest'
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimesheetEntryDto'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          description: 無權編輯此記錄或超過可編輯時間範圍
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /employee/tasks/{id}/complete:
+    patch:
+      tags: [Employee]
+      summary: 標記任務為完成
+      description: 標記任務完成，剩餘時數將釋放回專案池
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 任務標記完成成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDto'
+
+  # ===== PM Endpoints =====
+  /pm/projects:
+    get:
+      tags: [PM]
+      summary: 取得指派給自己的專案清單
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [ACTIVE, CLOSED]
+      responses:
+        '200':
+          description: 成功返回專案清單
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDto'
+
+  /pm/projects/{id}:
+    get:
+      tags: [PM]
+      summary: 取得專案詳情
+      description: 包含專案基本資訊、所有任務、時數統計等
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 成功返回專案詳情
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDetailDto'
+        '403':
+          description: 無權存取此專案（非指派的 PM）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /pm/projects/{id}/tasks:
+    post:
+      tags: [PM]
+      summary: 為專案建立新任務
+      description: |
+        建立任務時會從專案剩餘時數中扣除預估時數。
+        如果專案剩餘時數不足，則返回 400 錯誤。
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTaskRequest'
+      responses:
+        '201':
+          description: 任務建立成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDto'
+        '400':
+          description: 專案時數不足或驗證失敗
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /pm/tasks/{id}:
+    put:
+      tags: [PM]
+      summary: 更新任務資訊
+      description: 可更新任務名稱、描述、預估時數、指派人員
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTaskRequest'
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDto'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          description: 無權編輯此任務
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags: [PM]
+      summary: 刪除任務
+      description: |
+        僅能刪除沒有工時記錄的任務。
+        如果任務已有工時記錄，系統會拒絕刪除並提示改用關閉功能。
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: 刪除成功
+        '400':
+          description: 任務有工時記錄，無法刪除
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: TASK_HAS_TIMESHEETS
+                message: 此任務已有工時記錄，請改用關閉功能
+
+  /pm/tasks/{id}/close:
+    patch:
+      tags: [PM]
+      summary: 關閉任務
+      description: 關閉任務（保留所有工時記錄）
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 任務關閉成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskDto'
+
+  /pm/hours-requests:
+    get:
+      tags: [PM]
+      summary: 取得自己提交的時數申請清單
+      parameters:
+        - name: projectId
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [PENDING, APPROVED, REJECTED]
+      responses:
+        '200':
+          description: 成功返回時數申請清單
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HoursRequestDto'
+
+    post:
+      tags: [PM]
+      summary: 提交時數申請
+      description: 向管理層申請增加專案時數
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateHoursRequestRequest'
+      responses:
+        '201':
+          description: 申請提交成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoursRequestDto'
+
+  # ===== Executive Endpoints =====
+  /executive/projects:
+    get:
+      tags: [Executive]
+      summary: 取得所有專案清單
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [ACTIVE, CLOSED]
+        - name: pmId
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 成功返回專案清單
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDto'
+
+    post:
+      tags: [Executive]
+      summary: 建立新專案
+      description: 建立專案並指派給 PM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectRequest'
+      responses:
+        '201':
+          description: 專案建立成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDto'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /executive/projects/{id}:
+    get:
+      tags: [Executive]
+      summary: 取得專案詳情
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 成功返回專案詳情
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDetailDto'
+
+    put:
+      tags: [Executive]
+      summary: 更新專案資訊
+      description: |
+        可更新專案名稱、描述、總時數、或變更 PM。
+        變更 PM 時，所有任務自動轉移給新 PM，系統會發送通知。
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectRequest'
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDto'
+
+  /executive/projects/{id}/close:
+    patch:
+      tags: [Executive]
+      summary: 關閉專案
+      description: |
+        關閉專案後，所有相關任務自動關閉，
+        執行人員無法再填報該專案的工時。
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 專案關閉成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDto'
+
+  /executive/hours-requests:
+    get:
+      tags: [Executive]
+      summary: 取得所有時數申請清單
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [PENDING, APPROVED, REJECTED]
+        - name: projectId
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 成功返回時數申請清單
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HoursRequestDto'
+
+  /executive/hours-requests/{id}/approve:
+    patch:
+      tags: [Executive]
+      summary: 批准時數申請
+      description: 批准後自動增加專案總時數
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 申請批准成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoursRequestDto'
+
+  /executive/hours-requests/{id}/reject:
+    patch:
+      tags: [Executive]
+      summary: 拒絕時數申請
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 申請拒絕成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoursRequestDto'
+
+  # ===== Manager Endpoints =====
+  /manager/department/employees:
+    get:
+      tags: [Manager]
+      summary: 取得部門員工清單
+      description: 顯示部門內所有員工及其本週總工時
+      responses:
+        '200':
+          description: 成功返回員工清單
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeSummaryDto'
+
+  /manager/department/timesheets:
+    get:
+      tags: [Manager]
+      summary: 取得部門工時記錄
+      description: 查詢部門內所有員工的工時記錄
+      parameters:
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: employeeId
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 成功返回工時記錄
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimesheetEntryDto'
+
+  /manager/department/reports:
+    get:
+      tags: [Manager]
+      summary: 取得部門報表
+      description: 統計部門內所有員工的工時和任務分佈
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [THIS_WEEK, THIS_MONTH, CUSTOM]
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: 成功返回部門報表
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentReportDto'
+
+  /manager/department/reports/export:
+    get:
+      tags: [Manager]
+      summary: 匯出部門報表為 CSV
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: 成功匯出 CSV
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+
+  # ===== HR Endpoints =====
+  /hr/users:
+    get:
+      tags: [HR]
+      summary: 取得使用者清單
+      parameters:
+        - name: role
+          in: query
+          schema:
+            type: string
+            enum: [EXECUTIVE, PM, MANAGER, EMPLOYEE, HR]
+        - name: departmentId
+          in: query
+          schema:
+            type: integer
+            format: int64
+        - name: isActive
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: 成功返回使用者清單
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDto'
+
+    post:
+      tags: [HR]
+      summary: 建立新使用者
+      description: |
+        建立使用者並指派角色和部門。
+        系統會發送帳號啟用通知。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '201':
+          description: 使用者建立成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: Email 已存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /hr/users/{id}:
+    put:
+      tags: [HR]
+      summary: 更新使用者資訊
+      description: 可修改角色、部門等資訊
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+
+  /hr/users/{id}/deactivate:
+    patch:
+      tags: [HR]
+      summary: 停用使用者帳號
+      description: |
+        停用帳號時，系統會檢查該使用者是否有進行中的任務。
+        如有，將任務標記為「待重新指派」並通知相關 PM。
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 停用成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+
+  /hr/users/{id}/activate:
+    patch:
+      tags: [HR]
+      summary: 啟用使用者帳號
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 啟用成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+
+  # ===== Notifications =====
+  /notifications/unread:
+    get:
+      tags: [Notifications]
+      summary: 取得未讀通知
+      responses:
+        '200':
+          description: 成功返回未讀通知清單
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NotificationDto'
+
+  /notifications/{id}/read:
+    patch:
+      tags: [Notifications]
+      summary: 標記通知為已讀
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: 標記成功
+
+# ===== Components =====
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    # User-related schemas
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: 張三
+        email:
+          type: string
+          format: email
+          example: zhangsan@example.com
+        role:
+          type: string
+          enum: [EXECUTIVE, PM, MANAGER, EMPLOYEE, HR]
+          example: PM
+        department:
+          $ref: '#/components/schemas/DepartmentDto'
+        isActive:
+          type: boolean
+          example: true
+        createdAt:
+          type: string
+          format: date-time
+
+    CreateUserRequest:
+      type: object
+      required: [name, email, password, role]
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 100
+          example: 張三
+        email:
+          type: string
+          format: email
+          example: zhangsan@example.com
+        password:
+          type: string
+          format: password
+          minLength: 8
+          example: SecureP@ss123
+        role:
+          type: string
+          enum: [EXECUTIVE, PM, MANAGER, EMPLOYEE, HR]
+          example: EMPLOYEE
+        departmentId:
+          type: integer
+          format: int64
+          nullable: true
+          description: EMPLOYEE 和 MANAGER 必須指定部門
+          example: 1
+
+    UpdateUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 100
+        role:
+          type: string
+          enum: [EXECUTIVE, PM, MANAGER, EMPLOYEE, HR]
+        departmentId:
+          type: integer
+          format: int64
+          nullable: true
+
+    # Department-related schemas
+    DepartmentDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: 研發部
+        manager:
+          $ref: '#/components/schemas/UserDto'
+
+    # Project-related schemas
+    ProjectDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: 客戶管理系統
+        description:
+          type: string
+          example: 開發新的客戶管理系統
+        totalHours:
+          type: number
+          format: double
+          example: 1000.00
+        usedHours:
+          type: number
+          format: double
+          example: 350.50
+        remainingHours:
+          type: number
+          format: double
+          example: 649.50
+        status:
+          type: string
+          enum: [ACTIVE, CLOSED]
+          example: ACTIVE
+        pm:
+          $ref: '#/components/schemas/UserDto'
+        createdBy:
+          $ref: '#/components/schemas/UserDto'
+        createdAt:
+          type: string
+          format: date-time
+
+    ProjectDetailDto:
+      allOf:
+        - $ref: '#/components/schemas/ProjectDto'
+        - type: object
+          properties:
+            tasks:
+              type: array
+              items:
+                $ref: '#/components/schemas/TaskDto'
+            hoursRequests:
+              type: array
+              items:
+                $ref: '#/components/schemas/HoursRequestDto'
+
+    CreateProjectRequest:
+      type: object
+      required: [name, totalHours, pmId]
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 200
+          example: 客戶管理系統
+        description:
+          type: string
+          example: 開發新的客戶管理系統
+        totalHours:
+          type: number
+          format: double
+          minimum: 0
+          example: 1000.00
+        pmId:
+          type: integer
+          format: int64
+          example: 2
+
+    UpdateProjectRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 200
+        description:
+          type: string
+        totalHours:
+          type: number
+          format: double
+          minimum: 0
+        pmId:
+          type: integer
+          format: int64
+          description: 變更 PM 時，所有任務自動轉移
+
+    # Task-related schemas
+    TaskDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: 實作使用者登入功能
+        description:
+          type: string
+          example: 開發前後端的使用者登入功能
+        project:
+          $ref: '#/components/schemas/ProjectDto'
+        assignee:
+          $ref: '#/components/schemas/UserDto'
+        estimatedHours:
+          type: number
+          format: double
+          example: 40.00
+        usedHours:
+          type: number
+          format: double
+          example: 25.50
+        remainingHours:
+          type: number
+          format: double
+          example: 14.50
+        status:
+          type: string
+          enum: [IN_PROGRESS, COMPLETED, CLOSED, PENDING_REASSIGNMENT]
+          example: IN_PROGRESS
+        completedAt:
+          type: string
+          format: date-time
+          nullable: true
+        actualHours:
+          type: number
+          format: double
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+
+    CreateTaskRequest:
+      type: object
+      required: [name, estimatedHours, assigneeId]
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 200
+          example: 實作使用者登入功能
+        description:
+          type: string
+          example: 開發前後端的使用者登入功能
+        estimatedHours:
+          type: number
+          format: double
+          minimum: 0
+          example: 40.00
+        assigneeId:
+          type: integer
+          format: int64
+          example: 5
+
+    UpdateTaskRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 200
+        description:
+          type: string
+        estimatedHours:
+          type: number
+          format: double
+          minimum: 0
+        assigneeId:
+          type: integer
+          format: int64
+
+    # Timesheet-related schemas
+    TimesheetEntryDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 100
+        date:
+          type: string
+          format: date
+          example: '2026-02-05'
+        hours:
+          type: number
+          format: double
+          example: 8.00
+        description:
+          type: string
+          example: 完成使用者登入的前端介面
+        task:
+          $ref: '#/components/schemas/TaskDto'
+        user:
+          $ref: '#/components/schemas/UserDto'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    CreateTimesheetEntryRequest:
+      type: object
+      required: [date, hours, description, taskId]
+      properties:
+        date:
+          type: string
+          format: date
+          example: '2026-02-05'
+        hours:
+          type: number
+          format: double
+          minimum: 0.01
+          maximum: 24.00
+          example: 8.00
+        description:
+          type: string
+          minLength: 5
+          maxLength: 1000
+          example: 完成使用者登入的前端介面
+        taskId:
+          type: integer
+          format: int64
+          example: 10
+
+    UpdateTimesheetEntryRequest:
+      type: object
+      properties:
+        hours:
+          type: number
+          format: double
+          minimum: 0.01
+          maximum: 24.00
+        description:
+          type: string
+          minLength: 5
+          maxLength: 1000
+
+    # Hours Request schemas
+    HoursRequestDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 20
+        project:
+          $ref: '#/components/schemas/ProjectDto'
+        requester:
+          $ref: '#/components/schemas/UserDto'
+        reason:
+          type: string
+          example: 需求變更，任務範圍擴大
+        requestedHours:
+          type: number
+          format: double
+          example: 200.00
+        status:
+          type: string
+          enum: [PENDING, APPROVED, REJECTED]
+          example: PENDING
+        approver:
+          $ref: '#/components/schemas/UserDto'
+          nullable: true
+        reviewedAt:
+          type: string
+          format: date-time
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+
+    CreateHoursRequestRequest:
+      type: object
+      required: [projectId, reason, requestedHours]
+      properties:
+        projectId:
+          type: integer
+          format: int64
+          example: 1
+        reason:
+          type: string
+          minLength: 10
+          maxLength: 1000
+          example: 需求變更，任務範圍擴大
+        requestedHours:
+          type: number
+          format: double
+          minimum: 0.01
+          example: 200.00
+
+    # Notification schemas
+    NotificationDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 500
+        type:
+          type: string
+          enum:
+            - TASK_ASSIGNED
+            - HOURS_REQUEST_APPROVED
+            - HOURS_REQUEST_REJECTED
+            - PROJECT_PM_CHANGED
+            - TASK_HOURS_INSUFFICIENT
+            - USER_DEACTIVATED
+          example: TASK_ASSIGNED
+        title:
+          type: string
+          example: 新任務指派：實作使用者登入功能
+        message:
+          type: string
+          example: PM 李四 指派了一個新任務給你
+        relatedEntityType:
+          type: string
+          example: TASK
+          nullable: true
+        relatedEntityId:
+          type: integer
+          format: int64
+          example: 10
+          nullable: true
+        isRead:
+          type: boolean
+          example: false
+        createdAt:
+          type: string
+          format: date-time
+
+    # Manager-specific schemas
+    EmployeeSummaryDto:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserDto'
+        weekTotalHours:
+          type: number
+          format: double
+          example: 40.00
+        monthTotalHours:
+          type: number
+          format: double
+          example: 160.00
+        activeTasks:
+          type: integer
+          example: 3
+
+    DepartmentReportDto:
+      type: object
+      properties:
+        departmentName:
+          type: string
+          example: 研發部
+        period:
+          type: object
+          properties:
+            startDate:
+              type: string
+              format: date
+            endDate:
+              type: string
+              format: date
+        totalEmployees:
+          type: integer
+          example: 15
+        totalHours:
+          type: number
+          format: double
+          example: 600.00
+        employeeStats:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployeeSummaryDto'
+
+    # Error schemas
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          example: VALIDATION_ERROR
+        message:
+          type: string
+          example: 驗證失敗
+        details:
+          type: array
+          items:
+            type: string
+          example: ["工時日期必須在過去三個工作天內"]
+        timestamp:
+          type: string
+          format: date-time
+
+  responses:
+    BadRequest:
+      description: 請求格式錯誤或驗證失敗
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    Unauthorized:
+      description: 未授權（未登入或 Token 無效）
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: UNAUTHORIZED
+            message: 請先登入
+            timestamp: '2026-02-06T10:00:00Z'
+
+    Forbidden:
+      description: 禁止存取（無權限）
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: FORBIDDEN
+            message: 您無權存取此資源
+            timestamp: '2026-02-06T10:00:00Z'
+
+    NotFound:
+      description: 資源不存在
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: NOT_FOUND
+            message: 找不到指定的資源
+            timestamp: '2026-02-06T10:00:00Z'

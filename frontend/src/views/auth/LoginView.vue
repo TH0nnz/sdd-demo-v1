@@ -50,9 +50,9 @@
         <div class="demo-info">
           <p class="demo-title">Demo Credentials:</p>
           <ul class="demo-list">
-            <li>EXECUTIVE: executive@example.com / password123</li>
-            <li>DEPT_HEAD: depthead@example.com / password123</li>
+            <li>EMPLOYEE: employee@example.com / password123</li>
             <li>MANAGER: manager@example.com / password123</li>
+            <li>EXECUTIVE: executive@example.com / password123</li>
             <li>PM: pm@example.com / password123</li>
           </ul>
         </div>

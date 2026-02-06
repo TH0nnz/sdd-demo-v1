@@ -41,7 +41,7 @@ CREATE TABLE users (
     version INTEGER NOT NULL DEFAULT 0,
     CONSTRAINT chk_user_name_length CHECK (LENGTH(name) >= 2),
     CONSTRAINT chk_user_email_format CHECK (email ~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$'),
-    CONSTRAINT chk_user_role CHECK (role IN ('MANAGER', 'PM', 'DEPT_HEAD', 'EXECUTIVE', 'HR')),
+    CONSTRAINT chk_user_role CHECK (role IN ('EXECUTIVE', 'PM', 'MANAGER', 'EMPLOYEE', 'HR')),
     CONSTRAINT fk_user_department FOREIGN KEY (department_id) REFERENCES departments(id)
 );
 
@@ -49,9 +49,9 @@ CREATE UNIQUE INDEX idx_user_email ON users(email);
 CREATE INDEX idx_user_department ON users(department_id);
 CREATE INDEX idx_user_role ON users(role);
 CREATE INDEX idx_user_active ON users(active);
-COMMENT ON TABLE users IS '用戶資料表 - 支援五種角色 (MANAGER, PM, DEPT_HEAD, EXECUTIVE, HR)';
+COMMENT ON TABLE users IS '用戶資料表 - 支援五種角色 (EXECUTIVE, PM, MANAGER, EMPLOYEE, HR)';
 COMMENT ON COLUMN users.password_hash IS 'BCrypt 加密密碼';
-COMMENT ON COLUMN users.role IS '用戶角色: MANAGER(管理層), PM(專案經理), DEPT_HEAD(部門主管), EXECUTIVE(執行人員), HR(人資)';
+COMMENT ON COLUMN users.role IS '用戶角色: EXECUTIVE(管理層), PM(專案經理), MANAGER(部門主管), EMPLOYEE(執行人員), HR(人資)';
 
 -- Add foreign key constraint for department manager
 ALTER TABLE departments ADD CONSTRAINT fk_department_manager 

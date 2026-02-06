@@ -3,13 +3,16 @@ package com.example.timesheet.domain.enums;
 /**
  * User roles in the timesheet management system.
  * Each role has specific permissions and responsibilities.
+ * 
+ * Roles follow the specification in data-model.md:
+ * EXECUTIVE, PM, MANAGER, EMPLOYEE, HR
  */
 public enum UserRole {
     /**
-     * 管理層 - Can create/modify/close projects, approve time requests
+     * 管理層 (Executive Level) - Can create/modify/close projects, approve time requests
      * Highest level of authority in the system
      */
-    MANAGER,
+    EXECUTIVE,
     
     /**
      * 專案經理 (Project Manager) - Can create/modify tasks, request additional hours
@@ -18,16 +21,16 @@ public enum UserRole {
     PM,
     
     /**
-     * 部門主管 (Department Head) - Can view department members' timesheets
+     * 部門主管 (Department Manager) - Can view department members' timesheets
      * Oversees departmental operations and reporting
      */
-    DEPT_HEAD,
+    MANAGER,
     
     /**
-     * 執行人員 (Executive/Employee) - Can log timesheets, mark tasks as completed
+     * 執行人員 (Employee) - Can log timesheets, mark tasks as completed
      * Primary users who perform project work and log time
      */
-    EXECUTIVE,
+    EMPLOYEE,
     
     /**
      * 人力資源 (Human Resources) - Can manage users, assign roles

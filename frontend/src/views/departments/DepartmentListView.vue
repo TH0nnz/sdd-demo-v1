@@ -119,7 +119,7 @@ const form = ref({
 })
 
 const canCreateDepartment = computed(
-  () => authStore.user?.role === UserRole.HR || authStore.user?.role === UserRole.DEPT_HEAD
+  () => authStore.user?.role === UserRole.HR || authStore.user?.role === UserRole.MANAGER
 )
 
 const canEditDepartment = computed(() => authStore.user?.role === UserRole.HR)

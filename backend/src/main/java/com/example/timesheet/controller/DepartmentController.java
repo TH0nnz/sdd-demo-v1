@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.*;
 /**
  * REST Controller for department management.
  * Handles department CRUD operations and department information queries.
- * Available to HR and department heads.
+ * Available to HR and department managers.
  */
 @RestController
 @RequestMapping("/api/departments")
-@Tag(name = "Departments", description = "部門管理 API (HR、部門主管)")
+@Tag(name = "Departments", description = "部門管理 API (HR、部門經理)")
 @Slf4j
 @SecurityRequirement(name = "BearerAuth")
 public class DepartmentController {
@@ -41,7 +41,7 @@ public class DepartmentController {
      * @return paginated department list
      */
     @GetMapping
-    @PreAuthorize("hasAnyRole('HR', 'DEPT_HEAD', 'MANAGER')")
+    @PreAuthorize("hasAnyRole('HR', 'MANAGER', 'EXECUTIVE')")
     @Operation(summary = "查詢部門列表")
     public ResponseEntity<Page<DepartmentResponse>> listDepartments(
             @RequestParam(defaultValue = "0") int page,
@@ -62,7 +62,7 @@ public class DepartmentController {
      * @return department response
      */
     @GetMapping("/{departmentId}")
-    @PreAuthorize("hasAnyRole('HR', 'DEPT_HEAD', 'MANAGER', 'PM')")
+    @PreAuthorize("hasAnyRole('HR', 'MANAGER', 'EXECUTIVE', 'PM')")
     @Operation(summary = "取得部門詳情")
     public ResponseEntity<DepartmentResponse> getDepartment(@PathVariable Long departmentId) {
         log.info("Getting department: {}", departmentId);
@@ -82,7 +82,7 @@ public class DepartmentController {
      * @return department detail response
      */
     @GetMapping("/{departmentId}/detail")
-    @PreAuthorize("hasAnyRole('HR', 'DEPT_HEAD', 'MANAGER')")
+    @PreAuthorize("hasAnyRole('HR', 'MANAGER', 'EXECUTIVE')")
     @Operation(summary = "取得部門詳細資訊", description = "包含部門成員數量和主管信息")
     public ResponseEntity<DepartmentDetailResponse> getDepartmentDetail(@PathVariable Long departmentId) {
         log.info("Getting department detail: {}", departmentId);
