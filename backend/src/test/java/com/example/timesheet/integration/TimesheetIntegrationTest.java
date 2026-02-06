@@ -2,6 +2,7 @@ package com.example.timesheet.integration;
 
 import com.example.timesheet.domain.entity.*;
 import com.example.timesheet.domain.enums.ProjectStatus;
+import com.example.timesheet.domain.enums.TaskStatus;
 import com.example.timesheet.domain.enums.UserRole;
 import com.example.timesheet.domain.repository.*;
 import com.example.timesheet.dto.request.CreateTimesheetRequest;
@@ -93,7 +94,7 @@ class TimesheetIntegrationTest {
             .description("Core implementation")
             .estimatedHours(40.0)
             .usedHours(0.0)
-            .status("TODO")
+            .status(TaskStatus.IN_PROGRESS)
             .project(project)
             .assignee(executive)
             .version(0)

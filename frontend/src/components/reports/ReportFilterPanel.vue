@@ -91,9 +91,9 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
-import type { ReportFilterState } from '../types/report';
-import { useUserStore } from '../stores/user';
-import { useProjectStore } from '../stores/project';
+import type { ReportFilterState } from '../../types/report';
+import { useUserStore } from '../../stores/user';
+import { useProjectStore } from '../../stores/project';
 
 interface Props {
   filterState: ReportFilterState;

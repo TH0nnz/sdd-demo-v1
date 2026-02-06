@@ -346,4 +346,23 @@ public class TimesheetService {
                 .build())
             .build();
     }
+    
+    /**
+     * Get timesheets by user with optional date filtering.
+     * Wrapper method for controller convenience.
+     * 
+     * @param userId User ID
+     * @param startDateStr Start date string (YYYY-MM-DD) or null
+     * @param endDateStr End date string (YYYY-MM-DD) or null
+     * @param pageable Pagination parameters
+     * @return Paginated timesheet response
+     */
+    @Transactional(readOnly = true)
+    public TimesheetPageResponse getTimesheetsByUser(Long userId, String startDateStr, 
+                                                     String endDateStr, Pageable pageable) {
+        LocalDate startDate = startDateStr != null ? LocalDate.parse(startDateStr) : LocalDate.now().minusMonths(1);
+        LocalDate endDate = endDateStr != null ? LocalDate.parse(endDateStr) : LocalDate.now();
+        
+        return getUserTimesheets(userId, startDate, endDate, pageable);
+    }
 }

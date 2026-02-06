@@ -53,17 +53,17 @@ public class OpenApiConfig {
                                 "使用 JWT Bearer Token 認證。\n" +
                                 "在 Authorization header 中添加: `Bearer {token}`\n\n" +
                                 "### 角色權限\n" +
-                                "- **MANAGER (管理層)**: 創建/修改/關閉專案，審批時數申請\n" +
+                                "- **EXECUTIVE (管理層)**: 創建/修改/關閉專案，審批時數申請\n" +
                                 "- **PM (專案經理)**: 創建/修改任務，申請額外時數\n" +
-                                "- **DEPT_HEAD (部門主管)**: 查詢部門成員工時報表\n" +
-                                "- **EXECUTIVE (執行人員)**: 填報工時，標記任務完成\n" +
+                                "- **MANAGER (部門主管)**: 查詢部門成員工時報表\n" +
+                                "- **EMPLOYEE (執行人員)**: 填報工時，標記任務完成\n" +
                                 "- **HR (人力資源)**: 管理用戶，分配角色\n\n" +
                                 "### 測試帳號\n" +
                                 "- HR: hr.wang@company.com / password123\n" +
-                                "- Manager: manager.zhang@company.com / password123\n" +
+                                "- Executive: manager.zhang@company.com / password123\n" +
                                 "- PM: pm.wu@company.com / password123\n" +
-                                "- Executive: exec.zhao@company.com / password123\n" +
-                                "- Dept Head: depthead.lin@company.com / password123")
+                                "- Employee: exec.zhao@company.com / password123\n" +
+                                "- Manager: depthead.lin@company.com / password123")
                         .contact(new Contact()
                                 .name("Development Team")
                                 .email("dev@company.com"))

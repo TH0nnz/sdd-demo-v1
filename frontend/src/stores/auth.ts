@@ -23,10 +23,10 @@ export interface User {
 }
 
 export enum UserRole {
-  MANAGER = 'MANAGER',
-  PM = 'PM',
-  DEPT_HEAD = 'DEPT_HEAD',
   EXECUTIVE = 'EXECUTIVE',
+  PM = 'PM',
+  MANAGER = 'MANAGER',
+  EMPLOYEE = 'EMPLOYEE',
   HR = 'HR',
 }
 
@@ -54,27 +54,27 @@ export const useAuthStore = defineStore('auth', () => {
   const userEmail = computed(() => user.value?.email);
 
   // Role-based permissions
-  const isManager = computed(() => userRole.value === UserRole.MANAGER);
-  const isPM = computed(() => userRole.value === UserRole.PM);
-  const isDeptHead = computed(() => userRole.value === UserRole.DEPT_HEAD);
   const isExecutive = computed(() => userRole.value === UserRole.EXECUTIVE);
+  const isPM = computed(() => userRole.value === UserRole.PM);
+  const isManager = computed(() => userRole.value === UserRole.MANAGER);
+  const isEmployee = computed(() => userRole.value === UserRole.EMPLOYEE);
   const isHR = computed(() => userRole.value === UserRole.HR);
 
   const canManageProjects = computed(() => 
-    userRole.value === UserRole.MANAGER || userRole.value === UserRole.PM
+    userRole.value === UserRole.EXECUTIVE || userRole.value === UserRole.PM
   );
 
   const canManageTasks = computed(() => 
-    userRole.value === UserRole.PM || userRole.value === UserRole.EXECUTIVE
+    userRole.value === UserRole.PM || userRole.value === UserRole.MANAGER
   );
 
   const canLogTimesheets = computed(() => 
-    userRole.value === UserRole.EXECUTIVE
+    userRole.value === UserRole.EMPLOYEE
   );
 
   const canViewReports = computed(() => 
+    userRole.value === UserRole.EXECUTIVE || 
     userRole.value === UserRole.MANAGER || 
-    userRole.value === UserRole.DEPT_HEAD || 
     userRole.value === UserRole.PM
   );
 
@@ -164,10 +164,10 @@ export const useAuthStore = defineStore('auth', () => {
     userRole,
     userName,
     userEmail,
-    isManager,
-    isPM,
-    isDeptHead,
     isExecutive,
+    isPM,
+    isManager,
+    isEmployee,
     isHR,
     canManageProjects,
     canManageTasks,

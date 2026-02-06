@@ -31,10 +31,10 @@
       <label for="role">角色 *</label>
       <select id="role" v-model="formData.role" class="form-input" required>
         <option value="">請選擇角色</option>
-        <option value="MANAGER">管理層</option>
+        <option value="EXECUTIVE">管理層</option>
         <option value="PM">PM</option>
-        <option value="DEPT_HEAD">部門主管</option>
-        <option value="EXECUTIVE">執行人員</option>
+        <option value="MANAGER">部門主管</option>
+        <option value="EMPLOYEE">執行人員</option>
         <option value="HR">HR</option>
       </select>
     </div>
@@ -76,9 +76,9 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useUserStore } from '../stores/user';
-import type { UserResponse, CreateUserRequest, UpdateUserRequest } from '../types/user';
-import type { DepartmentResponse } from '../types/department';
+import { useUserStore } from '../../stores/user';
+import type { UserResponse, CreateUserRequest, UpdateUserRequest } from '../../types/user';
+import type { DepartmentResponse } from '../../types/department';
 
 interface Props {
   user?: UserResponse;
@@ -91,7 +91,7 @@ interface Emits {
   (e: 'cancel'): void;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   loading: false,
   departments: () => [],
 });
@@ -111,8 +111,6 @@ const error = ref<string | null>(null);
 
 const isEdit = computed(() => !!props.user);
 const loading = computed(() => props.loading);
-
-const props = defineProps<Props>();
 
 onMounted(() => {
   if (props.user) {

@@ -28,13 +28,13 @@ import java.time.LocalDate;
 /**
  * REST Controller for timesheet management (T125).
  * Handles timesheet CRUD operations and work hours calculation.
- * Only EXECUTIVE role can access these endpoints.
+ * Only EMPLOYEE role can access these endpoints.
  * 
  * Corresponds to User Story 1 - 工時記錄 (Timesheet Entry MVP)
  */
 @RestController
 @RequestMapping("/api/timesheets")
-@Tag(name = "Timesheets", description = "工時記錄 API (Executive)")
+@Tag(name = "Timesheets", description = "工時記錄 API (Employee)")
 @RequiredArgsConstructor
 @Slf4j
 @SecurityRequirement(name = "BearerAuth")
@@ -52,7 +52,7 @@ public class TimesheetController {
      * @return paginated timesheet list
      */
     @GetMapping
-    @PreAuthorize("hasRole('EXECUTIVE')")
+    @PreAuthorize("hasRole('EMPLOYEE')")
     @Operation(summary = "查詢我的工時記錄")
     public ResponseEntity<TimesheetPageResponse> listMyTimesheets(
         @RequestParam(required = false) LocalDate startDate,
@@ -88,7 +88,7 @@ public class TimesheetController {
      * @return timesheet details
      */
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('EXECUTIVE')")
+    @PreAuthorize("hasRole('EMPLOYEE')")
     @Operation(summary = "查詢工時記錄詳情")
     public ResponseEntity<TimesheetResponse> getTimesheet(@PathVariable Long id) {
         log.debug("Getting timesheet: {}", id);
@@ -105,7 +105,7 @@ public class TimesheetController {
      * @return calculation preview
      */
     @PostMapping("/calculate-preview")
-    @PreAuthorize("hasRole('EXECUTIVE')")
+    @PreAuthorize("hasRole('EMPLOYEE')")
     @Operation(summary = "工時計算預覽 (含午休自動扣除)")
     public ResponseEntity<WorkHoursCalculationResponse> calculatePreview(
         @Valid @RequestBody CreateTimesheetRequest request) {
@@ -127,7 +127,7 @@ public class TimesheetController {
      * @return created timesheet with 201 status
      */
     @PostMapping
-    @PreAuthorize("hasRole('EXECUTIVE')")
+    @PreAuthorize("hasRole('EMPLOYEE')")
     @Operation(summary = "建立工時記錄 (支援午休自動扣除)")
     public ResponseEntity<TimesheetResponse> createTimesheet(
         @Valid @RequestBody CreateTimesheetRequest request,
@@ -159,7 +159,7 @@ public class TimesheetController {
      * @return updated timesheet
      */
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('EXECUTIVE')")
+    @PreAuthorize("hasRole('EMPLOYEE')")
     @Operation(summary = "更新工時記錄 (限三工作天內)")
     public ResponseEntity<TimesheetResponse> updateTimesheet(
         @PathVariable Long id,
@@ -188,7 +188,7 @@ public class TimesheetController {
      * @return success message
      */
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('EXECUTIVE')")
+    @PreAuthorize("hasRole('EMPLOYEE')")
     @Operation(summary = "刪除工時記錄")
     public ResponseEntity<MessageResponse> deleteTimesheet(
         @PathVariable Long id,

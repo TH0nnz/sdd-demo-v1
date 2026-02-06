@@ -1,5 +1,6 @@
 package com.example.timesheet.domain.entity;
 
+import com.example.timesheet.domain.enums.TaskStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,8 +34,10 @@ public class Task {
     @Column(name = "used_hours", nullable = false)
     private Double usedHours = 0.0;
     
-    @Column(name = "status", nullable = false, length = 20)
-    private String status = "TODO";
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 30)
+    @Builder.Default
+    private TaskStatus status = TaskStatus.IN_PROGRESS;
     
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

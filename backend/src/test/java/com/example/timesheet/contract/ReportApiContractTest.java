@@ -2,6 +2,7 @@ package com.example.timesheet.contract;
 
 import com.example.timesheet.domain.entity.*;
 import com.example.timesheet.domain.enums.ProjectStatus;
+import com.example.timesheet.domain.enums.TaskStatus;
 import com.example.timesheet.domain.enums.UserRole;
 import com.example.timesheet.domain.repository.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -78,12 +79,12 @@ class ReportApiContractTest {
             .name("Engineering")
             .build());
 
-        // Create DEPT_HEAD user
+        // Create MANAGER user
         deptHeadUser = userRepository.save(User.builder()
             .name("Manager-Li")
             .email("depthead@example.com")
             .passwordHash(passwordEncoder.encode("password123"))
-            .role(UserRole.DEPT_HEAD)
+            .role(UserRole.MANAGER)
             .department(department)
             .active(true)
             .build());
@@ -115,7 +116,7 @@ class ReportApiContractTest {
             .assignee(executiveUser)
             .estimatedHours(40.0)
             .usedHours(0.0)
-            .status("TODO")
+            .status(TaskStatus.IN_PROGRESS)
             .version(0)
             .build());
 

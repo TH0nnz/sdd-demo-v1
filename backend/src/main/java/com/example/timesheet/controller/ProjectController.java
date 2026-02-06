@@ -27,13 +27,13 @@ import java.net.URI;
 /**
  * REST Controller for project management.
  * Handles project CRUD operations and lifecycle management.
- * Only MANAGER users have access to these endpoints.
+ * Only EXECUTIVE users have access to these endpoints.
  * 
  * Corresponds to User Story 3 - 管理層管理專案與分派時數
  */
 @RestController
 @RequestMapping("/api/projects")
-@Tag(name = "Projects", description = "專案管理 API (Manager)")
+@Tag(name = "Projects", description = "專案管理 API (Executive)")
 @Slf4j
 @SecurityRequirement(name = "BearerAuth")
 public class ProjectController {
@@ -55,7 +55,7 @@ public class ProjectController {
      * @return paginated project list
      */
     @GetMapping
-    @PreAuthorize("hasAnyRole('MANAGER', 'PM')")
+    @PreAuthorize("hasAnyRole('EXECUTIVE', 'PM')")
     @Operation(summary = "查詢專案列表")
     public ResponseEntity<ProjectPageResponse> listProjects(
             @RequestParam(required = false) Long pmId,
@@ -83,7 +83,7 @@ public class ProjectController {
      * @return project details
      */
     @GetMapping("/{projectId}")
-    @PreAuthorize("hasAnyRole('MANAGER', 'PM')")
+    @PreAuthorize("hasAnyRole('EXECUTIVE', 'PM')")
     @Operation(summary = "取得專案詳細資訊")
     public ResponseEntity<ProjectDetailResponse> getProject(@PathVariable Long projectId) {
         log.debug("Fetching project: {}", projectId);
@@ -100,7 +100,7 @@ public class ProjectController {
      * @return project dashboard response with calculated metrics
      */
     @GetMapping("/{projectId}/dashboard")
-    @PreAuthorize("hasAnyRole('MANAGER', 'PM')")
+    @PreAuthorize("hasAnyRole('EXECUTIVE', 'PM')")
     @Operation(summary = "取得專案儀表板統計")
     public ResponseEntity<ProjectDashboardResponse> getProjectDashboard(@PathVariable Long projectId) {
         log.debug("Fetching project dashboard: {}", projectId);
@@ -111,14 +111,14 @@ public class ProjectController {
     
     /**
      * Create a new project.
-     * Only MANAGER can create projects.
+     * Only EXECUTIVE can create projects.
      * 
      * @param request project creation details
      * @param authentication current authenticated user
      * @return created project with 201 CREATED status
      */
     @PostMapping
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasRole('EXECUTIVE')")
     @Operation(summary = "建立新專案")
     public ResponseEntity<ProjectDetailResponse> createProject(
             @Valid @RequestBody CreateProjectRequest request,
@@ -140,7 +140,7 @@ public class ProjectController {
     
     /**
      * Update project details.
-     * Only MANAGER can update projects.
+     * Only EXECUTIVE can update projects.
      * Supports optimistic locking via version field.
      * 
      * @param projectId Project ID
@@ -149,7 +149,7 @@ public class ProjectController {
      * @return updated project details
      */
     @PutMapping("/{projectId}")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasRole('EXECUTIVE')")
     @Operation(summary = "更新專案資訊")
     public ResponseEntity<ProjectDetailResponse> updateProject(
             @PathVariable Long projectId,
@@ -171,14 +171,14 @@ public class ProjectController {
     /**
      * Close a project.
      * Closed projects cannot have new allocations.
-     * Only MANAGER can close projects.
+     * Only EXECUTIVE can close projects.
      * 
      * @param projectId Project ID
      * @param authentication current authenticated user
      * @return closed project details
      */
     @PostMapping("/{projectId}/close")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasRole('EXECUTIVE')")
     @Operation(summary = "關閉專案")
     public ResponseEntity<ProjectDetailResponse> closeProject(
             @PathVariable Long projectId,

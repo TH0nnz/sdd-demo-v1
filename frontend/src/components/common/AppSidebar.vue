@@ -136,11 +136,11 @@ const isVisible = (section: string) => {
     case 'dashboard':
       return true;
     case 'executive':
-      return [UserRole.EXECUTIVE, UserRole.PM, UserRole.DEPT_HEAD].includes(authStore.userRole);
+      return [UserRole.EMPLOYEE, UserRole.PM, UserRole.MANAGER].includes(authStore.userRole);
     case 'manager':
-      return [UserRole.MANAGER, UserRole.PM].includes(authStore.userRole);
+      return [UserRole.EXECUTIVE, UserRole.PM].includes(authStore.userRole);
     case 'deptHead':
-      return [UserRole.MANAGER, UserRole.DEPT_HEAD, UserRole.PM].includes(authStore.userRole);
+      return [UserRole.EXECUTIVE, UserRole.MANAGER, UserRole.PM].includes(authStore.userRole);
     case 'hr':
       return authStore.userRole === UserRole.HR;
     default:

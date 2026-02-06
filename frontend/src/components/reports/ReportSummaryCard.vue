@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ReportSummary } from '../types/report';
+import type { ReportSummary } from '../../types/report';
 
 interface Props {
   summary: ReportSummary;

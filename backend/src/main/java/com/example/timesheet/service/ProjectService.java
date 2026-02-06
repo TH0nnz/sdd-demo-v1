@@ -37,6 +37,7 @@ public class ProjectService {
     private final UserRepository userRepository;
     private final ProjectMapper projectMapper;
     private final TaskRepository taskRepository;
+    private final NotificationService notificationService;
     
     /**
      * Create a new project.
@@ -214,6 +215,37 @@ public class ProjectService {
         }
         if (request.getTotalHours() != null) {
             project.setTotalHours(request.getTotalHours());
+        }
+        
+        // Handle PM change - only EXECUTIVE can change PM
+        if (request.getPmId() != null && !request.getPmId().equals(project.getPm().getId())) {
+            // Verify manager is actually EXECUTIVE for PM changes
+            if (manager.getRole() != UserRole.EXECUTIVE) {
+                throw new IllegalArgumentException("Only EXECUTIVE role can change project PM");
+            }
+            
+            // Get new PM
+            User newPm = userRepository.findById(request.getPmId())
+                .orElseThrow(() -> new IllegalArgumentException("New PM not found with id: " + request.getPmId()));
+            
+            // Verify new PM has PM role
+            if (newPm.getRole() != UserRole.PM) {
+                throw new IllegalArgumentException("Selected user is not a PM");
+            }
+            
+            // Store old PM for notification
+            Long oldPmId = project.getPm().getId();
+            
+            // Update PM
+            project.setPm(newPm);
+            
+            // Save project first to ensure consistency
+            project = projectRepository.save(project);
+            
+            // Send notifications to both old and new PM
+            notificationService.notifyPmChange(oldPmId, newPm.getId(), project.getId(), project.getName());
+            
+            log.info("Project {} PM changed from {} to {}", projectId, oldPmId, newPm.getId());
         }
         
         project = projectRepository.save(project);

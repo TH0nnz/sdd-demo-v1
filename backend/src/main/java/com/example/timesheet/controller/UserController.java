@@ -50,7 +50,7 @@ public class UserController {
      * @return paginated user list
      */
     @GetMapping
-    @PreAuthorize("hasAnyRole('HR', 'DEPT_HEAD')")
+    @PreAuthorize("hasAnyRole('HR', 'MANAGER')")
     @Operation(summary = "查詢用戶列表")
     public ResponseEntity<UserPageResponse> listUsers(
             @RequestParam(required = false) UserRole role,
@@ -98,7 +98,7 @@ public class UserController {
      * @return user response
      */
     @GetMapping("/{userId}")
-    @PreAuthorize("hasAnyRole('HR', 'DEPT_HEAD')")
+    @PreAuthorize("hasAnyRole('HR', 'MANAGER')")
     @Operation(summary = "取得用戶詳情")
     public ResponseEntity<UserResponse> getUser(@PathVariable Long userId) {
         log.info("Getting user: {}", userId);

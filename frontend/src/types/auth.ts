@@ -4,12 +4,18 @@
 
 /**
  * User Role Enum
+ * Roles follow the specification:
+ * - EXECUTIVE: 管理層 (Highest authority)
+ * - PM: 專案經理 (Project Manager)
+ * - MANAGER: 部門主管 (Department Head)
+ * - EMPLOYEE: 執行人員 (Worker)
+ * - HR: 人力資源 (Human Resources)
  */
 export enum UserRole {
-  MANAGER = 'MANAGER',
-  PM = 'PM',
-  DEPT_HEAD = 'DEPT_HEAD',
   EXECUTIVE = 'EXECUTIVE',
+  PM = 'PM',
+  MANAGER = 'MANAGER',
+  EMPLOYEE = 'EMPLOYEE',
   HR = 'HR',
 }
 
@@ -17,10 +23,10 @@ export enum UserRole {
  * User Role Display Names (Chinese)
  */
 export const UserRoleDisplayNames: Record<UserRole, string> = {
-  [UserRole.MANAGER]: '管理層',
+  [UserRole.EXECUTIVE]: '管理層',
   [UserRole.PM]: '專案經理',
-  [UserRole.DEPT_HEAD]: '部門主管',
-  [UserRole.EXECUTIVE]: '執行人員',
+  [UserRole.MANAGER]: '部門主管',
+  [UserRole.EMPLOYEE]: '執行人員',
   [UserRole.HR]: '人力資源',
 };
 

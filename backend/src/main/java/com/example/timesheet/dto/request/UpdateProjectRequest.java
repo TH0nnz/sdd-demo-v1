@@ -33,6 +33,11 @@ public class UpdateProjectRequest {
     private Integer totalHours;
     
     /**
+     * New PM user ID (optional) - Only EXECUTIVE can change PM
+     */
+    private Long pmId;
+    
+    /**
      * Current version for optimistic locking (required for updates)
      */
     @NotNull(message = "Version cannot be null (required for optimistic locking)")
