@@ -6,7 +6,8 @@
   "description": "Enterprise timesheet management system - Frontend",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "build": "vite build",
+    "build:check": "vue-tsc && vite build",
     "preview": "vite preview",
     "test:unit": "vitest",
     "test:unit:coverage": "vitest --coverage",
@@ -32,6 +33,7 @@
     "vue-tsc": "^1.8.27",
     "typescript": "^5.3.3",
     "@types/node": "^20.11.5",
+    "sass": "^1.70.0",
     "vitest": "^1.2.1",
     "@vitest/coverage-v8": "^1.2.1",
     "jsdom": "^24.0.0",

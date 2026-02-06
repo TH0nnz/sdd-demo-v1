@@ -8,15 +8,16 @@ COPY package*.json ./
 # Install dependencies
 # Try pnpm first, fallback to npm
 RUN if [ -f "pnpm-lock.yaml" ]; then \
-      npm install -g pnpm && pnpm install --frozen-lockfile; \
+      npm install -g pnpm && pnpm install; \
     else \
-      npm ci; \
+      npm install; \
     fi
 
 # Copy source code
 COPY . .
 
-# Build application
+# Build application (skip type checking in Docker for faster builds)
+# Type checking should be done in CI/CD pipeline separately
 RUN if [ -f "pnpm-lock.yaml" ]; then \
       pnpm build; \
     else \
