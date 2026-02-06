@@ -11,8 +11,8 @@
 ## Technical Context
 
 **Language/Version**: JDK 24  
-**Primary Dependencies**: Spring Boot 3.2+, Spring Security 6.2+, Spring Data JPA 3.2+, PostgreSQL Driver, Bean Validation  
-**Storage**: PostgreSQL 16+  
+**Primary Dependencies**: Spring Boot 4.0.2, Spring Security 7.0.2, Spring Data JPA 4.0, PostgreSQL 18.1 Driver, Bean Validation  
+**Storage**: PostgreSQL 18.1
 **Testing**: JUnit 5, Spring Boot Test, Testcontainers (PostgreSQL), MockMvc, AssertJ  
 **Target Platform**: Linux server (Docker containers), 瀏覽器端 (Chrome, Firefox, Safari)  
 **Project Type**: Web application (前後端分離架構 - Spring Boot REST API + Vue 3 SPA)  
