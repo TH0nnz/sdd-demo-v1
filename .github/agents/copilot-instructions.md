@@ -4,9 +4,9 @@ Auto-generated from all feature plans. Last updated: 2026-02-06
 
 ## Active Technologies
 
-- JDK 24 + Spring Boot 3.2+ + PostgreSQL 16+ (004-timesheet-roles)
+- JDK 24 + Spring Boot 4.0.2 + PostgreSQL 18.1 (004-timesheet-roles)
 - Vue 3 + TypeScript (004-timesheet-roles)
-- Spring Security 6.2+ + JWT (004-timesheet-roles)
+- Spring Security 7.0.2 + Spring Data JPA 4.0 + JWT (004-timesheet-roles)
 
 ## Project Structure
 
@@ -130,7 +130,7 @@ docker-compose logs -f backend    # View backend logs
 
 ## Recent Changes
 
-- 004-timesheet-roles: Added JDK 24 + Spring Boot 3.2+ + PostgreSQL 16+ + Vue 3 (role-based access control, JWT authentication, fine-grained permissions)
+- 004-timesheet-roles: Added JDK 24 + Spring Boot 4.0.2 + Spring Security 7.0.2 + Spring Data JPA 4.0 + PostgreSQL 18.1 + Vue 3 (role-based access control, JWT authentication, fine-grained permissions)
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
