@@ -22,14 +22,14 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create project structure: `backend/`, `frontend/`, `database/` directories per plan.md
-- [ ] T002 Initialize backend (Java 21 + Spring Boot 3.2): `backend/pom.xml` with dependencies (Spring Web, Data JPA, Security, Validation, Lombok, MapStruct, SpringDoc)
-- [ ] T003 [P] Initialize frontend (Vue 3 + TypeScript): `frontend/package.json` with dependencies (Vue, Vue Router, Pinia, Element Plus, Axios, Vitest, Playwright)
-- [ ] T004 [P] Configure backend linting: `backend/checkstyle.xml`, `backend/pmd.xml`, `backend/spotbugs-exclude.xml`
-- [ ] T005 [P] Configure frontend linting: `frontend/.eslintrc.js`, `frontend/.prettierrc`, `frontend/tsconfig.json`
-- [ ] T006 Setup Docker Compose: `docker-compose.yml` with PostgreSQL 14 service
-- [ ] T007 [P] Create `.gitignore` files for backend and frontend
-- [ ] T008 [P] Setup CI/CD pipeline: `.github/workflows/ci.yml` for automated testing
+- [X] T001 Create project structure: `backend/`, `frontend/`, `database/` directories per plan.md
+- [X] T002 Initialize backend (Java 21 + Spring Boot 3.2): `backend/pom.xml` with dependencies (Spring Web, Data JPA, Security, Validation, Lombok, MapStruct, SpringDoc)
+- [X] T003 [P] Initialize frontend (Vue 3 + TypeScript): `frontend/package.json` with dependencies (Vue, Vue Router, Pinia, Element Plus, Axios, Vitest, Playwright)
+- [X] T004 [P] Configure backend linting: `backend/checkstyle.xml`, `backend/pmd.xml`, `backend/spotbugs-exclude.xml`
+- [X] T005 [P] Configure frontend linting: `frontend/.eslintrc.js`, `frontend/.prettierrc`, `frontend/tsconfig.json`
+- [X] T006 Setup Docker Compose: `docker-compose.yml` with PostgreSQL 14 service
+- [X] T007 [P] Create `.gitignore` files for backend and frontend
+- [X] T008 [P] Setup CI/CD pipeline: `.github/workflows/ci.yml` for automated testing
 
 ---
 
@@ -39,26 +39,26 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T009 Create database schema migrations: `backend/src/main/resources/db/migration/V1__init_schema.sql` with all tables (users, departments, projects, tasks, timesheet_entries, time_requests)
-- [ ] T010 [P] Create User entity: `backend/src/main/java/com/example/timesheet/domain/entity/User.java`
-- [ ] T011 [P] Create UserRole enum: `backend/src/main/java/com/example/timesheet/domain/enums/UserRole.java`
-- [ ] T012 [P] Create Department entity: `backend/src/main/java/com/example/timesheet/domain/entity/Department.java`
-- [ ] T013 [P] Create UserRepository: `backend/src/main/java/com/example/timesheet/domain/repository/UserRepository.java`
-- [ ] T014 [P] Create DepartmentRepository: `backend/src/main/java/com/example/timesheet/domain/repository/DepartmentRepository.java`
-- [ ] T015 Implement JWT authentication: `backend/src/main/java/com/example/timesheet/security/JwtTokenProvider.java`
-- [ ] T016 Implement JWT filter: `backend/src/main/java/com/example/timesheet/security/JwtAuthenticationFilter.java`
-- [ ] T017 Implement UserDetailsService: `backend/src/main/java/com/example/timesheet/security/CustomUserDetailsService.java`
-- [ ] T018 Configure Spring Security: `backend/src/main/java/com/example/timesheet/config/SecurityConfig.java`
-- [ ] T019 [P] Implement WorkHoursCalculator utility: `backend/src/main/java/com/example/timesheet/util/WorkHoursCalculator.java` (午休扣除邏輯)
-- [ ] T020 [P] Implement DateUtils utility: `backend/src/main/java/com/example/timesheet/util/DateUtils.java` (工作天計算)
-- [ ] T021 [P] Create GlobalExceptionHandler: `backend/src/main/java/com/example/timesheet/exception/GlobalExceptionHandler.java`
-- [ ] T022 [P] Create common DTOs: `backend/src/main/java/com/example/timesheet/dto/response/ErrorResponse.java`, `MessageResponse.java`, `PageMetadata.java`
-- [ ] T023 Insert seed data: `backend/src/main/resources/db/migration/V2__insert_sample_data.sql` (測試用戶帳號)
-- [ ] T024 [P] Setup frontend API client: `frontend/src/api/client.ts` with Axios interceptors
-- [ ] T025 [P] Create frontend auth store: `frontend/src/stores/auth.ts` with Pinia
-- [ ] T026 [P] Create frontend types: `frontend/src/types/common.ts`, `auth.ts`
-- [ ] T027 [P] Setup Vue Router: `frontend/src/router/index.ts` with authentication guards
-- [ ] T028 Configure OpenAPI documentation: `backend/src/main/java/com/example/timesheet/config/OpenApiConfig.java`
+- [X] T009 Create database schema migrations: `backend/src/main/resources/db/migration/V1__init_schema.sql` with all tables (users, departments, projects, tasks, timesheet_entries, time_requests)
+- [X] T010 [P] Create User entity: `backend/src/main/java/com/example/timesheet/domain/entity/User.java`
+- [X] T011 [P] Create UserRole enum: `backend/src/main/java/com/example/timesheet/domain/enums/UserRole.java`
+- [X] T012 [P] Create Department entity: `backend/src/main/java/com/example/timesheet/domain/entity/Department.java`
+- [X] T013 [P] Create UserRepository: `backend/src/main/java/com/example/timesheet/domain/repository/UserRepository.java`
+- [X] T014 [P] Create DepartmentRepository: `backend/src/main/java/com/example/timesheet/domain/repository/DepartmentRepository.java`
+- [X] T015 Implement JWT authentication: `backend/src/main/java/com/example/timesheet/security/JwtTokenProvider.java`
+- [X] T016 Implement JWT filter: `backend/src/main/java/com/example/timesheet/security/JwtAuthenticationFilter.java`
+- [X] T017 Implement UserDetailsService: `backend/src/main/java/com/example/timesheet/security/CustomUserDetailsService.java`
+- [X] T018 Configure Spring Security: `backend/src/main/java/com/example/timesheet/config/SecurityConfig.java`
+- [X] T019 [P] Implement WorkHoursCalculator utility: `backend/src/main/java/com/example/timesheet/util/WorkHoursCalculator.java` (午休扣除邏輯)
+- [X] T020 [P] Implement DateUtils utility: `backend/src/main/java/com/example/timesheet/util/DateUtils.java` (工作天計算)
+- [X] T021 [P] Create GlobalExceptionHandler: `backend/src/main/java/com/example/timesheet/exception/GlobalExceptionHandler.java`
+- [X] T022 [P] Create common DTOs: `backend/src/main/java/com/example/timesheet/dto/response/ErrorResponse.java`, `MessageResponse.java`, `PageMetadata.java`
+- [X] T023 Insert seed data: `backend/src/main/resources/db/migration/V2__insert_sample_data.sql` (測試用戶帳號)
+- [X] T024 [P] Setup frontend API client: `frontend/src/api/client.ts` with Axios interceptors
+- [X] T025 [P] Create frontend auth store: `frontend/src/stores/auth.ts` with Pinia
+- [X] T026 [P] Create frontend types: `frontend/src/types/common.ts`, `auth.ts`
+- [X] T027 [P] Setup Vue Router: `frontend/src/router/index.ts` with authentication guards
+- [X] T028 Configure OpenAPI documentation: `backend/src/main/java/com/example/timesheet/config/OpenApiConfig.java`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -74,31 +74,31 @@
 
 ### Tests for User Story 5 (Test-First - Write These FIRST) ⚠️
 
-- [ ] T029 [P] [US5] Contract test for POST /api/users: `backend/src/test/java/com/example/timesheet/contract/UserApiContractTest.java`
-- [ ] T030 [P] [US5] Contract test for PUT /api/users/{userId}: `backend/src/test/java/com/example/timesheet/contract/UserApiContractTest.java`
-- [ ] T031 [P] [US5] Integration test for create user journey: `backend/src/test/java/com/example/timesheet/integration/UserIntegrationTest.java`
-- [ ] T032 [P] [US5] Integration test for role change workflow: `backend/src/test/java/com/example/timesheet/integration/UserIntegrationTest.java`
+- [X] T029 [P] [US5] Contract test for POST /api/users: `backend/src/test/java/com/example/timesheet/contract/UserApiContractTest.java`
+- [X] T030 [P] [US5] Contract test for PUT /api/users/{userId}: `backend/src/test/java/com/example/timesheet/contract/UserApiContractTest.java`
+- [X] T031 [P] [US5] Integration test for create user journey: `backend/src/test/java/com/example/timesheet/integration/UserIntegrationTest.java`
+- [X] T032 [P] [US5] Integration test for role change workflow: `backend/src/test/java/com/example/timesheet/integration/UserIntegrationTest.java`
 
 ### Implementation for User Story 5
 
-- [ ] T033 [P] [US5] Create UserService: `backend/src/main/java/com/example/timesheet/service/UserService.java`
-- [ ] T034 [P] [US5] Create DepartmentService: `backend/src/main/java/com/example/timesheet/service/DepartmentService.java`
-- [ ] T035 [P] [US5] Create User request DTOs: `backend/src/main/java/com/example/timesheet/dto/request/CreateUserRequest.java`, `UpdateUserRequest.java`
-- [ ] T036 [P] [US5] Create User response DTOs: `backend/src/main/java/com/example/timesheet/dto/response/UserResponse.java`, `UserSimpleResponse.java`, `UserPageResponse.java`
-- [ ] T037 [P] [US5] Create Department DTOs: `backend/src/main/java/com/example/timesheet/dto/response/DepartmentResponse.java`, `DepartmentSimpleResponse.java`, `DepartmentDetailResponse.java`
-- [ ] T038 [P] [US5] Create UserMapper: `backend/src/main/java/com/example/timesheet/mapper/UserMapper.java` (MapStruct)
-- [ ] T039 [P] [US5] Create DepartmentMapper: `backend/src/main/java/com/example/timesheet/mapper/DepartmentMapper.java` (MapStruct)
-- [ ] T040 [US5] Implement UserController (GET, POST, PUT /api/users): `backend/src/main/java/com/example/timesheet/controller/UserController.java`
-- [ ] T041 [US5] Implement user deactivate/activate endpoints: `UserController.java` POST /api/users/{userId}/deactivate, /activate
-- [ ] T042 [US5] Implement DepartmentController: `backend/src/main/java/com/example/timesheet/controller/DepartmentController.java`
-- [ ] T043 [P] [US5] Create frontend user API: `frontend/src/api/users.ts`
-- [ ] T044 [P] [US5] Create frontend department API: `frontend/src/api/departments.ts`
-- [ ] T045 [P] [US5] Create frontend user types: `frontend/src/types/user.ts`
-- [ ] T046 [P] [US5] Create frontend user store: `frontend/src/stores/user.ts`
-- [ ] T047 [US5] Implement UserListView: `frontend/src/views/users/UserListView.vue` with filtering (role, department, status)
-- [ ] T048 [P] [US5] Implement UserForm component: `frontend/src/components/users/UserForm.vue`
-- [ ] T049 [US5] Implement UserFormView: `frontend/src/views/users/UserFormView.vue` (create/edit user)
-- [ ] T050 [US5] Add user management routes: `frontend/src/router/index.ts` (require HR role)
+- [X] T033 [P] [US5] Create UserService: `backend/src/main/java/com/example/timesheet/service/UserService.java`
+- [X] T034 [P] [US5] Create DepartmentService: `backend/src/main/java/com/example/timesheet/service/DepartmentService.java`
+- [X] T035 [P] [US5] Create User request DTOs: `backend/src/main/java/com/example/timesheet/dto/request/CreateUserRequest.java`, `UpdateUserRequest.java`
+- [X] T036 [P] [US5] Create User response DTOs: `backend/src/main/java/com/example/timesheet/dto/response/UserResponse.java`, `UserSimpleResponse.java`, `UserPageResponse.java`
+- [X] T037 [P] [US5] Create Department DTOs: `backend/src/main/java/com/example/timesheet/dto/response/DepartmentResponse.java`, `DepartmentSimpleResponse.java`, `DepartmentDetailResponse.java`
+- [X] T038 [P] [US5] Create UserMapper: `backend/src/main/java/com/example/timesheet/mapper/UserMapper.java` (MapStruct)
+- [X] T039 [P] [US5] Create DepartmentMapper: `backend/src/main/java/com/example/timesheet/mapper/DepartmentMapper.java` (MapStruct)
+- [X] T040 [US5] Implement UserController (GET, POST, PUT /api/users): `backend/src/main/java/com/example/timesheet/controller/UserController.java`
+- [X] T041 [US5] Implement user deactivate/activate endpoints: `UserController.java` POST /api/users/{userId}/deactivate, /activate
+- [X] T042 [US5] Implement DepartmentController: `backend/src/main/java/com/example/timesheet/controller/DepartmentController.java`
+- [X] T043 [P] [US5] Create frontend user API: `frontend/src/api/users.ts`
+- [X] T044 [P] [US5] Create frontend department API: `frontend/src/api/departments.ts`
+- [X] T045 [P] [US5] Create frontend user types: `frontend/src/types/user.ts`
+- [X] T046 [P] [US5] Create frontend user store: `frontend/src/stores/user.ts`
+- [X] T047 [US5] Implement UserListView: `frontend/src/views/users/UserListView.vue` with filtering (role, department, status)
+- [X] T048 [P] [US5] Implement UserForm component: `frontend/src/components/users/UserForm.vue`
+- [X] T049 [US5] Implement UserFormView: `frontend/src/views/users/UserFormView.vue` (create/edit user)
+- [X] T050 [US5] Add user management routes: `frontend/src/router/index.ts` (require HR role)
 
 **Checkpoint**: HR 功能完整，可以建立並管理所有角色的用戶
 
@@ -114,40 +114,40 @@
 
 ### Tests for User Story 3 (Test-First) ⚠️
 
-- [ ] T051 [P] [US3] Contract test for POST /api/projects: `backend/src/test/java/com/example/timesheet/contract/ProjectApiContractTest.java`
-- [ ] T052 [P] [US3] Contract test for PUT /api/projects/{projectId}: `backend/src/test/java/com/example/timesheet/contract/ProjectApiContractTest.java`
-- [ ] T053 [P] [US3] Contract test for POST /api/projects/{projectId}/close: `backend/src/test/java/com/example/timesheet/contract/ProjectApiContractTest.java`
-- [ ] T054 [P] [US3] Contract test for POST /api/time-requests/{requestId}/approve: `backend/src/test/java/com/example/timesheet/contract/TimeRequestApiContractTest.java`
-- [ ] T055 [P] [US3] Integration test for create project workflow: `backend/src/test/java/com/example/timesheet/integration/ProjectIntegrationTest.java`
-- [ ] T056 [P] [US3] Integration test for approve time request workflow: `backend/src/test/java/com/example/timesheet/integration/TimeRequestIntegrationTest.java`
+- [X] T051 [P] [US3] Contract test for POST /api/projects: `backend/src/test/java/com/example/timesheet/contract/ProjectApiContractTest.java`
+- [X] T052 [P] [US3] Contract test for PUT /api/projects/{projectId}: `backend/src/test/java/com/example/timesheet/contract/ProjectApiContractTest.java`
+- [X] T053 [P] [US3] Contract test for POST /api/projects/{projectId}/close: `backend/src/test/java/com/example/timesheet/contract/ProjectApiContractTest.java`
+- [X] T054 [P] [US3] Contract test for POST /api/time-requests/{requestId}/approve: `backend/src/test/java/com/example/timesheet/contract/TimeRequestApiContractTest.java`
+- [X] T055 [P] [US3] Integration test for create project workflow: `backend/src/test/java/com/example/timesheet/integration/ProjectIntegrationTest.java`
+- [X] T056 [P] [US3] Integration test for approve time request workflow: `backend/src/test/java/com/example/timesheet/integration/TimeRequestIntegrationTest.java`
 
 ### Implementation for User Story 3
 
-- [ ] T057 [P] [US3] Create Project entity: `backend/src/main/java/com/example/timesheet/domain/entity/Project.java`
-- [ ] T058 [P] [US3] Create ProjectStatus enum: `backend/src/main/java/com/example/timesheet/domain/enums/ProjectStatus.java`
-- [ ] T059 [P] [US3] Create TimeRequest entity: `backend/src/main/java/com/example/timesheet/domain/entity/TimeRequest.java`
-- [ ] T060 [P] [US3] Create TimeRequestStatus enum: `backend/src/main/java/com/example/timesheet/domain/enums/TimeRequestStatus.java`
-- [ ] T061 [P] [US3] Create ProjectRepository: `backend/src/main/java/com/example/timesheet/domain/repository/ProjectRepository.java`
-- [ ] T062 [P] [US3] Create TimeRequestRepository: `backend/src/main/java/com/example/timesheet/domain/repository/TimeRequestRepository.java`
-- [ ] T063 [US3] Create ProjectService: `backend/src/main/java/com/example/timesheet/service/ProjectService.java` (create, update, close, 時數計算)
-- [ ] T064 [US3] Create TimeRequestService: `backend/src/main/java/com/example/timesheet/service/TimeRequestService.java` (approve, reject, 自動增加專案時數)
-- [ ] T065 [P] [US3] Create Project request DTOs: `backend/src/main/java/com/example/timesheet/dto/request/CreateProjectRequest.java`, `UpdateProjectRequest.java`
-- [ ] T066 [P] [US3] Create Project response DTOs: `backend/src/main/java/com/example/timesheet/dto/response/ProjectResponse.java`, `ProjectSimpleResponse.java`, `ProjectDetailResponse.java`, `ProjectPageResponse.java`, `ProjectDashboardResponse.java`
-- [ ] T067 [P] [US3] Create TimeRequest DTOs: `backend/src/main/java/com/example/timesheet/dto/request/CreateTimeRequestRequest.java` and response DTOs
-- [ ] T068 [P] [US3] Create ProjectMapper: `backend/src/main/java/com/example/timesheet/mapper/ProjectMapper.java` (MapStruct)
-- [ ] T069 [P] [US3] Create TimeRequestMapper: `backend/src/main/java/com/example/timesheet/mapper/TimeRequestMapper.java` (MapStruct)
-- [ ] T070 [US3] Implement ProjectController (CRUD + close): `backend/src/main/java/com/example/timesheet/controller/ProjectController.java`
-- [ ] T071 [US3] Implement TimeRequestController (approve, reject): `backend/src/main/java/com/example/timesheet/controller/TimeRequestController.java`
-- [ ] T072 [P] [US3] Create frontend project API: `frontend/src/api/projects.ts`
-- [ ] T073 [P] [US3] Create frontend time-request API: `frontend/src/api/time-requests.ts`
-- [ ] T074 [P] [US3] Create frontend project types: `frontend/src/types/project.ts`
-- [ ] T075 [P] [US3] Create frontend project store: `frontend/src/stores/project.ts`
-- [ ] T076 [US3] Implement ProjectListView: `frontend/src/views/projects/ProjectListView.vue` with filtering (status, PM)
-- [ ] T077 [P] [US3] Implement ProjectForm component: `frontend/src/components/projects/ProjectForm.vue`
-- [ ] T078 [US3] Implement ProjectFormView: `frontend/src/views/projects/ProjectFormView.vue` (create/edit project)
-- [ ] T079 [US3] Implement TimeRequestListView: `frontend/src/views/time-requests/TimeRequestListView.vue` (管理層審批介面)
-- [ ] T080 [P] [US3] Implement TimeRequestApprovalModal: `frontend/src/components/time-requests/TimeRequestApprovalModal.vue`
-- [ ] T081 [US3] Add project and time-request routes: `frontend/src/router/index.ts` (require MANAGER role)
+- [X] T057 [P] [US3] Create Project entity: `backend/src/main/java/com/example/timesheet/domain/entity/Project.java`
+- [X] T058 [P] [US3] Create ProjectStatus enum: `backend/src/main/java/com/example/timesheet/domain/enums/ProjectStatus.java`
+- [X] T059 [P] [US3] Create TimeRequest entity: `backend/src/main/java/com/example/timesheet/domain/entity/TimeRequest.java`
+- [X] T060 [P] [US3] Create TimeRequestStatus enum: `backend/src/main/java/com/example/timesheet/domain/enums/TimeRequestStatus.java`
+- [X] T061 [P] [US3] Create ProjectRepository: `backend/src/main/java/com/example/timesheet/domain/repository/ProjectRepository.java`
+- [X] T062 [P] [US3] Create TimeRequestRepository: `backend/src/main/java/com/example/timesheet/domain/repository/TimeRequestRepository.java`
+- [X] T063 [US3] Create ProjectService: `backend/src/main/java/com/example/timesheet/service/ProjectService.java` (create, update, close, 時數計算)
+- [X] T064 [US3] Create TimeRequestService: `backend/src/main/java/com/example/timesheet/service/TimeRequestService.java` (approve, reject, 自動增加專案時數)
+- [X] T065 [P] [US3] Create Project request DTOs: `backend/src/main/java/com/example/timesheet/dto/request/CreateProjectRequest.java`, `UpdateProjectRequest.java`
+- [X] T066 [P] [US3] Create Project response DTOs: `backend/src/main/java/com/example/timesheet/dto/response/ProjectResponse.java`, `ProjectSimpleResponse.java`, `ProjectDetailResponse.java`, `ProjectPageResponse.java`, `ProjectDashboardResponse.java`
+- [X] T067 [P] [US3] Create TimeRequest DTOs: `backend/src/main/java/com/example/timesheet/dto/request/CreateTimeRequestRequest.java` and response DTOs
+- [X] T068 [P] [US3] Create ProjectMapper: `backend/src/main/java/com/example/timesheet/mapper/ProjectMapper.java` (MapStruct)
+- [X] T069 [P] [US3] Create TimeRequestMapper: `backend/src/main/java/com/example/timesheet/mapper/TimeRequestMapper.java` (MapStruct)
+- [X] T070 [US3] Implement ProjectController (CRUD + close): `backend/src/main/java/com/example/timesheet/controller/ProjectController.java`
+- [X] T071 [US3] Implement TimeRequestController (approve, reject): `backend/src/main/java/com/example/timesheet/controller/TimeRequestController.java`
+- [X] T072 [P] [US3] Create frontend project API: `frontend/src/api/projects.ts`
+- [X] T073 [P] [US3] Create frontend time-request API: `frontend/src/api/time-requests.ts`
+- [X] T074 [P] [US3] Create frontend project types: `frontend/src/types/project.ts`
+- [X] T075 [P] [US3] Create frontend project store: `frontend/src/stores/project.ts`
+- [X] T076 [US3] Implement ProjectListView: `frontend/src/views/projects/ProjectListView.vue` with filtering (status, PM)
+- [X] T077 [P] [US3] Implement ProjectForm component: `frontend/src/components/projects/ProjectForm.vue`
+- [X] T078 [US3] Implement ProjectFormView: `frontend/src/views/projects/ProjectFormView.vue` (create/edit project)
+- [X] T079 [US3] Implement TimeRequestListView: `frontend/src/views/time-requests/TimeRequestListView.vue` (管理層審批介面)
+- [X] T080 [P] [US3] Implement TimeRequestApprovalModal: `frontend/src/components/time-requests/TimeRequestApprovalModal.vue`
+- [X] T081 [US3] Add project and time-request routes: `frontend/src/router/index.ts` (require MANAGER role)
 
 **Checkpoint**: 管理層功能完整，可以建立專案並審批時數申請
 
@@ -163,38 +163,38 @@
 
 ### Tests for User Story 2 (Test-First) ⚠️
 
-- [ ] T082 [P] [US2] Contract test for POST /api/tasks: `backend/src/test/java/com/example/timesheet/contract/TaskApiContractTest.java`
-- [ ] T083 [P] [US2] Contract test for PUT /api/tasks/{taskId}: `backend/src/test/java/com/example/timesheet/contract/TaskApiContractTest.java`
-- [ ] T084 [P] [US2] Contract test for GET /api/projects/{projectId}/dashboard: `backend/src/test/java/com/example/timesheet/contract/ProjectApiContractTest.java`
-- [ ] T085 [P] [US2] Contract test for POST /api/time-requests: `backend/src/test/java/com/example/timesheet/contract/TimeRequestApiContractTest.java`
-- [ ] T086 [P] [US2] Integration test for create task workflow: `backend/src/test/java/com/example/timesheet/integration/TaskIntegrationTest.java`
-- [ ] T087 [P] [US2] Integration test for project dashboard: `backend/src/test/java/com/example/timesheet/integration/ProjectIntegrationTest.java`
-- [ ] T088 [P] [US2] Integration test for request additional hours: `backend/src/test/java/com/example/timesheet/integration/TimeRequestIntegrationTest.java`
+- [X] T082 [P] [US2] Contract test for POST /api/tasks: `backend/src/test/java/com/example/timesheet/contract/TaskApiContractTest.java`
+- [X] T083 [P] [US2] Contract test for PUT /api/tasks/{taskId}: `backend/src/test/java/com/example/timesheet/contract/TaskApiContractTest.java`
+- [X] T084 [P] [US2] Contract test for GET /api/projects/{projectId}/dashboard: `backend/src/test/java/com/example/timesheet/contract/ProjectApiContractTest.java`
+- [X] T085 [P] [US2] Contract test for POST /api/time-requests: `backend/src/test/java/com/example/timesheet/contract/TimeRequestApiContractTest.java`
+- [X] T086 [P] [US2] Integration test for create task workflow: `backend/src/test/java/com/example/timesheet/integration/TaskIntegrationTest.java`
+- [X] T087 [P] [US2] Integration test for project dashboard: `backend/src/test/java/com/example/timesheet/integration/ProjectIntegrationTest.java`
+- [X] T088 [P] [US2] Integration test for request additional hours: `backend/src/test/java/com/example/timesheet/integration/TimeRequestIntegrationTest.java`
 
 ### Implementation for User Story 2
 
-- [ ] T089 [P] [US2] Create Task entity: `backend/src/main/java/com/example/timesheet/domain/entity/Task.java`
-- [ ] T090 [P] [US2] Create TaskStatus enum: `backend/src/main/java/com/example/timesheet/domain/enums/TaskStatus.java`
-- [ ] T091 [P] [US2] Create TaskRepository: `backend/src/main/java/com/example/timesheet/domain/repository/TaskRepository.java` with custom queries (findByPmId, etc.)
-- [ ] T092 [US2] Create TaskService: `backend/src/main/java/com/example/timesheet/service/TaskService.java` (create, update, delete, complete, 時數檢查與警告)
-- [ ] T093 [US2] Enhance ProjectService: add `getProjectDashboard()` method for real-time statistics
-- [ ] T094 [US2] Enhance TimeRequestService: add PM's `createTimeRequest()` method
-- [ ] T095 [P] [US2] Create Task request DTOs: `backend/src/main/java/com/example/timesheet/dto/request/CreateTaskRequest.java`, `UpdateTaskRequest.java`
-- [ ] T096 [P] [US2] Create Task response DTOs: `backend/src/main/java/com/example/timesheet/dto/response/TaskResponse.java`, `TaskSimpleResponse.java`, `TaskDetailResponse.java`, `TaskPageResponse.java`
-- [ ] T097 [P] [US2] Create TaskMapper: `backend/src/main/java/com/example/timesheet/mapper/TaskMapper.java` (MapStruct)
-- [ ] T098 [US2] Implement TaskController (CRUD + complete): `backend/src/main/java/com/example/timesheet/controller/TaskController.java`
-- [ ] T099 [US2] Add project dashboard endpoint: `ProjectController.java` GET /api/projects/{projectId}/dashboard
-- [ ] T100 [US2] Add create time request endpoint: `TimeRequestController.java` POST /api/time-requests
-- [ ] T101 [P] [US2] Create frontend task API: `frontend/src/api/tasks.ts`
-- [ ] T102 [P] [US2] Create frontend task types: `frontend/src/types/task.ts`
-- [ ] T103 [P] [US2] Create frontend task store: `frontend/src/stores/task.ts`
-- [ ] T104 [US2] Implement TaskListView: `frontend/src/views/tasks/TaskListView.vue` with filtering (project, assignee, status)
-- [ ] T105 [P] [US2] Implement TaskForm component: `frontend/src/components/tasks/TaskForm.vue`
-- [ ] T106 [US2] Implement TaskFormView: `frontend/src/views/tasks/TaskFormView.vue` (create/edit task)
-- [ ] T107 [US2] Implement ProjectDashboardView: `frontend/src/views/projects/ProjectDashboardView.vue` (即時統計與任務狀態)
-- [ ] T108 [P] [US2] Implement TaskCard component: `frontend/src/components/tasks/TaskCard.vue` (顯示任務摘要與進度)
-- [ ] T109 [P] [US2] Implement TimeRequestForm component: `frontend/src/components/time-requests/TimeRequestForm.vue`
-- [ ] T110 [US2] Add task routes: `frontend/src/router/index.ts` (require PM or EXECUTIVE role)
+- [X] T089 [P] [US2] Create Task entity: `backend/src/main/java/com/example/timesheet/domain/entity/Task.java`
+- [X] T090 [P] [US2] Create TaskStatus enum: `backend/src/main/java/com/example/timesheet/domain/enums/TaskStatus.java`
+- [X] T091 [P] [US2] Create TaskRepository: `backend/src/main/java/com/example/timesheet/domain/repository/TaskRepository.java` with custom queries (findByPmId, etc.)
+- [X] T092 [US2] Create TaskService: `backend/src/main/java/com/example/timesheet/service/TaskService.java` (create, update, delete, complete, 時數檢查與警告)
+- [X] T093 [US2] Enhance ProjectService: add `getProjectDashboard()` method for real-time statistics
+- [X] T094 [US2] Enhance TimeRequestService: add PM's `createTimeRequest()` method
+- [X] T095 [P] [US2] Create Task request DTOs: `backend/src/main/java/com/example/timesheet/dto/request/CreateTaskRequest.java`, `UpdateTaskRequest.java`
+- [X] T096 [P] [US2] Create Task response DTOs: `backend/src/main/java/com/example/timesheet/dto/response/TaskResponse.java`, `TaskSimpleResponse.java`, `TaskDetailResponse.java`, `TaskPageResponse.java`
+- [X] T097 [P] [US2] Create TaskMapper: `backend/src/main/java/com/example/timesheet/mapper/TaskMapper.java` (MapStruct)
+- [X] T098 [US2] Implement TaskController (CRUD + complete): `backend/src/main/java/com/example/timesheet/controller/TaskController.java`
+- [X] T099 [US2] Add project dashboard endpoint: `ProjectController.java` GET /api/projects/{projectId}/dashboard
+- [X] T100 [US2] Add create time request endpoint: `TimeRequestController.java` POST /api/time-requests
+- [X] T101 [P] [US2] Create frontend task API: `frontend/src/api/tasks.ts`
+- [X] T102 [P] [US2] Create frontend task types: `frontend/src/types/task.ts`
+- [X] T103 [P] [US2] Create frontend task store: `frontend/src/stores/task.ts`
+- [X] T104 [US2] Implement TaskListView: `frontend/src/views/tasks/TaskListView.vue` with filtering (project, assignee, status)
+- [X] T105 [P] [US2] Implement TaskForm component: `frontend/src/components/tasks/TaskForm.vue`
+- [X] T106 [US2] Implement TaskFormView: `frontend/src/views/tasks/TaskFormView.vue` (create/edit task)
+- [X] T107 [US2] Implement ProjectDashboardView: `frontend/src/views/projects/ProjectDashboardView.vue` (即時統計與任務狀態)
+- [X] T108 [P] [US2] Implement TaskCard component: `frontend/src/components/tasks/TaskCard.vue` (顯示任務摘要與進度)
+- [X] T109 [P] [US2] Implement TimeRequestForm component: `frontend/src/components/time-requests/TimeRequestForm.vue`
+- [X] T110 [US2] Add task routes: `frontend/src/router/index.ts` (require PM or EXECUTIVE role)
 
 **Checkpoint**: PM 功能完整，可以建立任務、監控進度、申請時數
 
@@ -210,34 +210,34 @@
 
 ### Tests for User Story 1 (Test-First) ⚠️
 
-- [ ] T111 [P] [US1] Contract test for POST /api/timesheets: `backend/src/test/java/com/example/timesheet/contract/TimesheetApiContractTest.java`
-- [ ] T112 [P] [US1] Contract test for POST /api/timesheets/calculate-preview: `backend/src/test/java/com/example/timesheet/contract/TimesheetApiContractTest.java`
-- [ ] T113 [P] [US1] Contract test for PUT /api/timesheets/{timesheetId}: `backend/src/test/java/com/example/timesheet/contract/TimesheetApiContractTest.java`
-- [ ] T114 [P] [US1] Integration test for create timesheet (normal hours): `backend/src/test/java/com/example/timesheet/integration/TimesheetIntegrationTest.java`
-- [ ] T115 [P] [US1] Integration test for create timesheet (lunch deduction): `backend/src/test/java/com/example/timesheet/integration/TimesheetIntegrationTest.java`
-- [ ] T116 [P] [US1] Integration test for edit timesheet (within 3 working days): `backend/src/test/java/com/example/timesheet/integration/TimesheetIntegrationTest.java`
-- [ ] T117 [P] [US1] Integration test for reject edit (beyond 3 days): `backend/src/test/java/com/example/timesheet/integration/TimesheetIntegrationTest.java`
-- [ ] T118 [P] [US1] Unit test for WorkHoursCalculator (lunch deduction logic): `backend/src/test/java/com/example/timesheet/util/WorkHoursCalculatorTest.java`
+- [X] T111 [P] [US1] Contract test for POST /api/timesheets: `backend/src/test/java/com/example/timesheet/contract/TimesheetApiContractTest.java`
+- [X] T112 [P] [US1] Contract test for POST /api/timesheets/calculate-preview: `backend/src/test/java/com/example/timesheet/contract/TimesheetApiContractTest.java`
+- [X] T113 [P] [US1] Contract test for PUT /api/timesheets/{timesheetId}: `backend/src/test/java/com/example/timesheet/contract/TimesheetApiContractTest.java`
+- [X] T114 [P] [US1] Integration test for create timesheet (normal hours): `backend/src/test/java/com/example/timesheet/integration/TimesheetIntegrationTest.java`
+- [X] T115 [P] [US1] Integration test for create timesheet (lunch deduction): `backend/src/test/java/com/example/timesheet/integration/TimesheetIntegrationTest.java`
+- [X] T116 [P] [US1] Integration test for edit timesheet (within 3 working days): `backend/src/test/java/com/example/timesheet/integration/TimesheetIntegrationTest.java`
+- [X] T117 [P] [US1] Integration test for reject edit (beyond 3 days): `backend/src/test/java/com/example/timesheet/integration/TimesheetIntegrationTest.java`
+- [X] T118 [P] [US1] Unit test for WorkHoursCalculator (lunch deduction logic): `backend/src/test/java/com/example/timesheet/util/WorkHoursCalculatorTest.java`
 
 ### Implementation for User Story 1
 
-- [ ] T119 [P] [US1] Create TimesheetEntry entity: `backend/src/main/java/com/example/timesheet/domain/entity/TimesheetEntry.java`
-- [ ] T120 [P] [US1] Create TimesheetRepository: `backend/src/main/java/com/example/timesheet/domain/repository/TimesheetRepository.java` with custom queries
-- [ ] T121 [US1] Create TimesheetService: `backend/src/main/java/com/example/timesheet/service/TimesheetService.java` (create, update, delete, 工時計算、午休扣除、三工作天驗證、任務時數扣除、PM 通知)
-- [ ] T122 [P] [US1] Create Timesheet request DTOs: `backend/src/main/java/com/example/timesheet/dto/request/CreateTimesheetRequest.java`, `UpdateTimesheetRequest.java`
-- [ ] T123 [P] [US1] Create Timesheet response DTOs: `backend/src/main/java/com/example/timesheet/dto/response/TimesheetResponse.java`, `TimesheetPageResponse.java`, `WorkHoursCalculationResponse.java`
-- [ ] T124 [P] [US1] Create TimesheetMapper: `backend/src/main/java/com/example/timesheet/mapper/TimesheetMapper.java` (MapStruct)
-- [ ] T125 [US1] Implement TimesheetController (CRUD + calculate-preview): `backend/src/main/java/com/example/timesheet/controller/TimesheetController.java`
-- [ ] T126 [P] [US1] Create frontend timesheet API: `frontend/src/api/timesheets.ts`
-- [ ] T127 [P] [US1] Create frontend timesheet types: `frontend/src/types/timesheet.ts`
-- [ ] T128 [P] [US1] Create frontend timesheet store: `frontend/src/stores/timesheet.ts`
-- [ ] T129 [P] [US1] Create useWorkHoursCalculator composable: `frontend/src/composables/useWorkHoursCalculator.ts` (即時計算與午休提示)
-- [ ] T130 [US1] Implement TimesheetFormView: `frontend/src/views/timesheets/TimesheetFormView.vue` (填報工時表單，包含即時工時預覽與午休提示)
-- [ ] T131 [P] [US1] Implement TimesheetForm component: `frontend/src/components/timesheets/TimesheetForm.vue` (可重用表單元件)
-- [ ] T132 [P] [US1] Implement WorkHoursCalculator component: `frontend/src/components/timesheets/WorkHoursCalculator.vue` (工時計算預覽顯示)
-- [ ] T133 [US1] Implement TimesheetListView: `frontend/src/views/timesheets/TimesheetListView.vue` (執行人員的工時記錄列表，支援編輯與刪除)
-- [ ] T134 [P] [US1] Implement TimesheetCalendarView: `frontend/src/views/timesheets/TimesheetCalendarView.vue` (日曆視圖顯示工時)
-- [ ] T135 [US1] Add timesheet routes: `frontend/src/router/index.ts` (require EXECUTIVE role)
+- [X] T119 [P] [US1] Create TimesheetEntry entity: `backend/src/main/java/com/example/timesheet/domain/entity/TimesheetEntry.java`
+- [X] T120 [P] [US1] Create TimesheetRepository: `backend/src/main/java/com/example/timesheet/domain/repository/TimesheetRepository.java` with custom queries
+- [X] T121 [US1] Create TimesheetService: `backend/src/main/java/com/example/timesheet/service/TimesheetService.java` (create, update, delete, 工時計算、午休扣除、三工作天驗證、任務時數扣除、PM 通知)
+- [X] T122 [P] [US1] Create Timesheet request DTOs: `backend/src/main/java/com/example/timesheet/dto/request/CreateTimesheetRequest.java`, `UpdateTimesheetRequest.java`
+- [X] T123 [P] [US1] Create Timesheet response DTOs: `backend/src/main/java/com/example/timesheet/dto/response/TimesheetResponse.java`, `TimesheetPageResponse.java`, `WorkHoursCalculationResponse.java`
+- [X] T124 [P] [US1] Create TimesheetMapper: `backend/src/main/java/com/example/timesheet/mapper/TimesheetMapper.java` (MapStruct)
+- [X] T125 [US1] Implement TimesheetController (CRUD + calculate-preview): `backend/src/main/java/com/example/timesheet/controller/TimesheetController.java`
+- [X] T126 [P] [US1] Create frontend timesheet API: `frontend/src/api/timesheets.ts`
+- [X] T127 [P] [US1] Create frontend timesheet types: `frontend/src/types/timesheet.ts`
+- [X] T128 [P] [US1] Create frontend timesheet store: `frontend/src/stores/timesheet.ts`
+- [X] T129 [P] [US1] Create useWorkHoursCalculator composable: `frontend/src/composables/useWorkHoursCalculator.ts` (即時計算與午休提示)
+- [X] T130 [US1] Implement TimesheetFormView: `frontend/src/views/timesheets/TimesheetFormView.vue` (填報工時表單，包含即時工時預覽與午休提示)
+- [X] T131 [P] [US1] Implement TimesheetForm component: `frontend/src/components/timesheets/TimesheetForm.vue` (可重用表單元件)
+- [X] T132 [P] [US1] Implement WorkHoursCalculator component: `frontend/src/components/timesheets/WorkHoursCalculator.vue` (工時計算預覽顯示)
+- [X] T133 [US1] Implement TimesheetListView: `frontend/src/views/timesheets/TimesheetListView.vue` (執行人員的工時記錄列表，支援編輯與刪除)
+- [X] T134 [P] [US1] Implement TimesheetCalendarView: `frontend/src/views/timesheets/TimesheetCalendarView.vue` (日曆視圖顯示工時)
+- [X] T135 [US1] Add timesheet routes: `frontend/src/router/index.ts` (require EXECUTIVE role)
 
 **Checkpoint**: 🎯 MVP 完成！執行人員可以完整填報工時，系統核心價值已實現
 
@@ -251,23 +251,23 @@
 
 ### Tests for User Story 4 (Test-First) ⚠️
 
-- [ ] T136 [P] [US4] Contract test for GET /api/reports/timesheets: `backend/src/test/java/com/example/timesheet/contract/ReportApiContractTest.java`
-- [ ] T137 [P] [US4] Contract test for GET /api/reports/timesheets/export: `backend/src/test/java/com/example/timesheet/contract/ReportApiContractTest.java`
-- [ ] T138 [P] [US4] Integration test for timesheet report with filters: `backend/src/test/java/com/example/timesheet/integration/ReportIntegrationTest.java`
-- [ ] T139 [P] [US4] Integration test for CSV export: `backend/src/test/java/com/example/timesheet/integration/ReportIntegrationTest.java`
+- [X] T136 [P] [US4] Contract test for GET /api/reports/timesheets: `backend/src/test/java/com/example/timesheet/contract/ReportApiContractTest.java`
+- [X] T137 [P] [US4] Contract test for GET /api/reports/timesheets/export: `backend/src/test/java/com/example/timesheet/contract/ReportApiContractTest.java`
+- [X] T138 [P] [US4] Integration test for timesheet report with filters: `backend/src/test/java/com/example/timesheet/integration/ReportIntegrationTest.java`
+- [X] T139 [P] [US4] Integration test for CSV export: `backend/src/test/java/com/example/timesheet/integration/ReportIntegrationTest.java`
 
 ### Implementation for User Story 4
 
-- [ ] T140 [US4] Create ReportService: `backend/src/main/java/com/example/timesheet/service/ReportService.java` (工時報表查詢、CSV 匯出、分頁處理)
-- [ ] T141 [P] [US4] Create Report response DTOs: `backend/src/main/java/com/example/timesheet/dto/response/TimesheetReportResponse.java`, `ProjectSummaryReportResponse.java`
-- [ ] T142 [US4] Implement ReportController: `backend/src/main/java/com/example/timesheet/controller/ReportController.java` (GET /api/reports/timesheets, /export, /projects/summary)
-- [ ] T143 [P] [US4] Create frontend report API: `frontend/src/api/reports.ts`
-- [ ] T144 [P] [US4] Create frontend report types: `frontend/src/types/report.ts`
-- [ ] T145 [US4] Implement TimesheetReportView: `frontend/src/views/reports/TimesheetReportView.vue` (部門工時報表，支援日期、成員、專案篩選)
-- [ ] T146 [P] [US4] Implement ReportFilterPanel component: `frontend/src/components/reports/ReportFilterPanel.vue`
-- [ ] T147 [P] [US4] Implement ReportSummaryCard component: `frontend/src/components/reports/ReportSummaryCard.vue` (顯示統計摘要)
-- [ ] T148 [US4] Implement ProjectReportView: `frontend/src/views/reports/ProjectReportView.vue` (專案彙總報表)
-- [ ] T149 [US4] Add report routes: `frontend/src/router/index.ts` (require DEPT_HEAD, PM, or MANAGER role)
+- [X] T140 [US4] Create ReportService: `backend/src/main/java/com/example/timesheet/service/ReportService.java` (工時報表查詢、CSV 匯出、分頁處理)
+- [X] T141 [P] [US4] Create Report response DTOs: `backend/src/main/java/com/example/timesheet/dto/response/TimesheetReportResponse.java`, `ProjectSummaryReportResponse.java`
+- [X] T142 [US4] Implement ReportController: `backend/src/main/java/com/example/timesheet/controller/ReportController.java` (GET /api/reports/timesheets, /export, /projects/summary)
+- [X] T143 [P] [US4] Create frontend report API: `frontend/src/api/reports.ts`
+- [X] T144 [P] [US4] Create frontend report types: `frontend/src/types/report.ts`
+- [X] T145 [US4] Implement TimesheetReportView: `frontend/src/views/reports/TimesheetReportView.vue` (部門工時報表，支援日期、成員、專案篩選)
+- [X] T146 [P] [US4] Implement ReportFilterPanel component: `frontend/src/components/reports/ReportFilterPanel.vue`
+- [X] T147 [P] [US4] Implement ReportSummaryCard component: `frontend/src/components/reports/ReportSummaryCard.vue` (顯示統計摘要)
+- [X] T148 [US4] Implement ProjectReportView: `frontend/src/views/reports/ProjectReportView.vue` (專案彙總報表)
+- [X] T149 [US4] Add report routes: `frontend/src/router/index.ts` (require DEPT_HEAD, PM, or MANAGER role)
 
 **Checkpoint**: 部門主管功能完整，可以查看與匯出工時報表
 
@@ -277,18 +277,18 @@
 
 **Purpose**: 登入功能與共用 UI 元件
 
-- [ ] T150 [P] Implement AuthService: `backend/src/main/java/com/example/timesheet/service/AuthService.java` (login, change password)
-- [ ] T151 [P] Create LoginRequest, LoginResponse DTOs: `backend/src/main/java/com/example/timesheet/dto/request/LoginRequest.java` and response
-- [ ] T152 [P] Implement AuthController: `backend/src/main/java/com/example/timesheet/controller/AuthController.java` (POST /api/auth/login, /change-password, GET /me)
-- [ ] T153 [P] Create frontend auth API: `frontend/src/api/auth.ts`
-- [ ] T154 [P] Implement LoginView: `frontend/src/views/auth/LoginView.vue`
-- [ ] T155 [P] Implement ChangePasswordView: `frontend/src/views/auth/ChangePasswordView.vue`
-- [ ] T156 [P] Implement AppHeader component: `frontend/src/components/common/AppHeader.vue` (導航列，包含用戶資訊與登出)
-- [ ] T157 [P] Implement AppSidebar component: `frontend/src/components/common/AppSidebar.vue` (側邊選單，根據角色顯示功能)
-- [ ] T158 [P] Implement LoadingSpinner component: `frontend/src/components/common/LoadingSpinner.vue`
-- [ ] T159 [P] Implement ErrorBoundary component: `frontend/src/components/common/ErrorBoundary.vue`
-- [ ] T160 Implement main layout: `frontend/src/views/layouts/MainLayout.vue` (包含 Header + Sidebar + RouterView)
-- [ ] T161 Setup route guards: Enhance `frontend/src/router/index.ts` with authentication and role-based access control
+- [X] T150 [P] Implement AuthService: `backend/src/main/java/com/example/timesheet/service/AuthService.java` (login, change password)
+- [X] T151 [P] Create LoginRequest, LoginResponse DTOs: `backend/src/main/java/com/example/timesheet/dto/request/LoginRequest.java` and response
+- [X] T152 [P] Implement AuthController: `backend/src/main/java/com/example/timesheet/controller/AuthController.java` (POST /api/auth/login, /change-password, GET /me)
+- [X] T153 [P] Create frontend auth API: `frontend/src/api/auth.ts`
+- [X] T154 [P] Implement LoginView: `frontend/src/views/auth/LoginView.vue`
+- [X] T155 [P] Implement ChangePasswordView: `frontend/src/views/auth/ChangePasswordView.vue`
+- [X] T156 [P] Implement AppHeader component: `frontend/src/components/common/AppHeader.vue` (導航列，包含用戶資訊與登出)
+- [X] T157 [P] Implement AppSidebar component: `frontend/src/components/common/AppSidebar.vue` (側邊選單，根據角色顯示功能)
+- [X] T158 [P] Implement LoadingSpinner component: `frontend/src/components/common/LoadingSpinner.vue`
+- [X] T159 [P] Implement ErrorBoundary component: `frontend/src/components/common/ErrorBoundary.vue`
+- [X] T160 Implement main layout: `frontend/src/views/layouts/MainLayout.vue` (包含 Header + Sidebar + RouterView)
+- [X] T161 Setup route guards: Enhance `frontend/src/router/index.ts` with authentication and role-based access control
 
 ---
 
@@ -296,22 +296,22 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T162 [P] Add database indexes: `backend/src/main/resources/db/migration/V3__add_indexes.sql` (按 data-model.md 的索引策略)
-- [ ] T163 [P] Backend unit tests for services: `backend/src/test/java/com/example/timesheet/service/*Test.java` (80% coverage target)
-- [ ] T164 [P] Frontend unit tests for components: `frontend/tests/unit/components/**/*.spec.ts` (Vitest)
-- [ ] T165 [P] Frontend E2E tests for critical flows: `frontend/tests/e2e/login.spec.ts`, `timesheet.spec.ts`, `project.spec.ts` (Playwright)
-- [ ] T166 [P] Setup Spring Boot Actuator: `backend/pom.xml` dependency + `application.yml` endpoints configuration
-- [ ] T167 [P] Configure CORS properly: Update `SecurityConfig.java` with frontend URL
-- [ ] T168 [P] Add input validation messages (繁體中文): `backend/src/main/resources/ValidationMessages.properties`
-- [ ] T169 [P] Frontend accessibility improvements: WCAG 2.1 AA compliance (keyboard navigation, ARIA labels, color contrast)
-- [ ] T170 [P] Frontend performance optimization: Code splitting, lazy loading routes, bundle size analysis
-- [ ] T171 [P] Security hardening: Rate limiting, SQL injection prevention verification, XSS protection
-- [ ] T172 [P] Add API documentation examples: Enhance OpenAPI annotations with comprehensive examples
-- [ ] T173 [P] Create backend README: `backend/README.md` with setup and run instructions
-- [ ] T174 [P] Create frontend README: `frontend/README.md` with setup and run instructions
-- [ ] T175 Run quickstart.md validation: Follow `specs/002-timesheet-management/quickstart.md` to verify developer experience
-- [ ] T176 Code cleanup and refactoring: Remove TODOs, unused imports, apply consistent naming conventions
-- [ ] T177 [P] Setup monitoring (optional): Prometheus + Grafana configuration for production readiness
+- [X] T162 [P] Add database indexes: `backend/src/main/resources/db/migration/V3__add_indexes.sql` (按 data-model.md 的索引策略)
+- [X] T163 [P] Backend unit tests for services: `backend/src/test/java/com/example/timesheet/service/*Test.java` (80% coverage target)
+- [X] T164 [P] Frontend unit tests for components: `frontend/tests/unit/components/**/*.spec.ts` (Vitest)
+- [X] T165 [P] Frontend E2E tests for critical flows: `frontend/tests/e2e/login.spec.ts`, `timesheet.spec.ts`, `project.spec.ts` (Playwright)
+- [X] T166 [P] Setup Spring Boot Actuator: `backend/pom.xml` dependency + `application.yml` endpoints configuration
+- [X] T167 [P] Configure CORS properly: Update `SecurityConfig.java` with frontend URL
+- [X] T168 [P] Add input validation messages (繁體中文): `backend/src/main/resources/ValidationMessages.properties`
+- [X] T169 [P] Frontend accessibility improvements: WCAG 2.1 AA compliance (keyboard navigation, ARIA labels, color contrast)
+- [X] T170 [P] Frontend performance optimization: Code splitting, lazy loading routes, bundle size analysis
+- [X] T171 [P] Security hardening: Rate limiting, SQL injection prevention verification, XSS protection
+- [X] T172 [P] Add API documentation examples: Enhance OpenAPI annotations with comprehensive examples
+- [X] T173 [P] Create backend README: `backend/README.md` with setup and run instructions
+- [X] T174 [P] Create frontend README: `frontend/README.md` with setup and run instructions
+- [X] T175 Run quickstart.md validation: Follow `specs/002-timesheet-management/quickstart.md` to verify developer experience
+- [X] T176 Code cleanup and refactoring: Remove TODOs, unused imports, apply consistent naming conventions
+- [X] T177 [P] Setup monitoring (optional): Prometheus + Grafana configuration for production readiness
 
 ---
 
