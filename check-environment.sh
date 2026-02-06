@@ -56,15 +56,15 @@ if command -v java &> /dev/null; then
     JAVA_VERSION=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}' | awk -F '.' '{print $1}')
     JAVA_FULL_VERSION=$(java -version 2>&1 | head -n 1)
     
-    if [ "$JAVA_VERSION" -ge 21 ] 2>/dev/null; then
-        print_success "Java $JAVA_VERSION 已安裝（需求：Java 21+）"
+    if [ "$JAVA_VERSION" -ge 17 ] 2>/dev/null; then
+        print_success "Java $JAVA_VERSION 已安裝（需求：Java 17+）"
         echo "   版本: $JAVA_FULL_VERSION"
     else
-        print_error "Java 版本過低: $JAVA_VERSION（需求：Java 21+）"
+        print_error "Java 版本過低: $JAVA_VERSION（需求：Java 17+）"
         echo "   安裝指南: https://adoptium.net/"
     fi
 else
-    print_error "Java 未安裝（需求：Java 21+）"
+    print_error "Java 未安裝（需求：Java 17+）"
     echo "   安裝指南: https://adoptium.net/"
 fi
 echo ""

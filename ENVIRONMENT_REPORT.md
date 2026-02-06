@@ -24,7 +24,7 @@
 
 | 工具 | 需求版本 | 實際版本 | 狀態 |
 |------|---------|---------|------|
-| **Java** | 21+ | 24.0.2 | ✅ 通過 |
+| **Java** | 17+ | 24.0.2 | ✅ 通過 |
 | **Maven** | 3.6+ | 3.9.9 | ✅ 通過 |
 | **Node.js** | 18+ | 22.21.1 | ✅ 通過 |
 | **npm** | 8+ | 10.9.4 | ✅ 通過 |
@@ -125,7 +125,7 @@ cd frontend && npm run dev
 | 類別 | 技術 | 版本 |
 |------|------|------|
 | 框架 | Spring Boot | 3.2.2 |
-| 語言 | Java | 21+ |
+| 語言 | Java | 17+ |
 | 資料庫 | PostgreSQL | 14 |
 | ORM | Spring Data JPA / Hibernate | - |
 | 安全 | Spring Security + JWT | - |
@@ -249,7 +249,7 @@ cd frontend && pnpm install
 ### ✅ 環境狀態：完全就緒
 
 1. **所有核心工具版本符合需求**
-   - Java 24（高於需求的 21）
+   - Java 24（高於需求的 17）
    - Maven 3.9.9
    - Node.js 22.21.1
    - Docker & Docker Compose 最新版本

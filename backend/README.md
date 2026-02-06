@@ -6,7 +6,7 @@ Spring Boot REST API for the comprehensive timesheet management system.
 
 ### 前置需求
 
-- Java 11+
+- Java 17+
 - Maven 3.6+
 - MySQL 5.7+ 或 PostgreSQL 12+
 - Git
