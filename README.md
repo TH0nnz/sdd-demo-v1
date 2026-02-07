@@ -499,4 +499,11 @@ application:
 
 ---
 
+DEMO CREDENTIALS:
+
+EMPLOYEE: employee@example.com / password123
+MANAGER: manager@example.com / password123
+EXECUTIVE: executive@example.com / password123
+PM: pm@example.com / password123
+
 **Built with ❤️ by the Development Team**
